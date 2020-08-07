@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/XML/Review"
+    xmlns:rev="http://www.ftn.uns.ac.rs/XML/Review">
+
+    <xs:element name="review">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="criteriaEvaluation">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="relevanceOfResearchProblem" type="rev:TCriteriaGrade"/>
+                            <xs:element name="conceptualQuality" type="rev:TCriteriaGrade"/>
+                            <xs:element name="methodologicalQuality" type="rev:TCriteriaGrade"/>
+                            <xs:element name="readability" type="rev:TCriteriaGrade"/>
+                            <xs:element name="originality" type="rev:TCriteriaGrade"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="overallEvaluation">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="acceptable without revisions"/>
+                            <xs:enumeration value="acceptable with minor revisions"/>
+                            <xs:enumeration value="acceptable with major revisions"/>
+                            <xs:enumeration value="reject"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="commentToAuthor" type="xs:string"/>
+                <xs:element name="commentsToEditor" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="reviewId" type="xs:string"/>
+            <xs:attribute name="submissionDate" type="xs:date"/>
+            <xs:attribute name="publicationId" type="xs:string"/>
+            <xs:attribute name="reviewedBy" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TCriteriaGrade">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="excellent"/>
+            <xs:enumeration value="very good"/>
+            <xs:enumeration value="good"/>
+            <xs:enumeration value="small weaknesses"/>
+            <xs:enumeration value="great weaknesses"/>
+            <xs:enumeration value="absolutely insufficient"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

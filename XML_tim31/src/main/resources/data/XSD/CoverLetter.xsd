@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/XML/CoverLetter"
+    xmlns:cl="http://www.ftn.uns.ac.rs/XML/CoverLetter">
+
+    <xs:element name="coverLetter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="authorData">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="authorName" type="xs:string"/>
+                            <xs:element name="authorEmail" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="content" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="coverLetterId" type="xs:string"/>
+            <xs:attribute name="submissionDate" type="xs:date"/>
+            <xs:attribute name="publicationId" type="xs:string"/>
+            <xs:attribute name="publicationTitle" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

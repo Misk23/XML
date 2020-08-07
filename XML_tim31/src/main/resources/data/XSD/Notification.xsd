@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/XML/Notification"
+    xmlns:noti="http://www.ftn.uns.ac.rs/XML/Notification">
+
+    <xs:element name="notification">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sender" type="noti:TParticipant"/>
+                <xs:element name="receiver" type="noti:TParticipant"/>
+                <xs:element name="publicationTitle" type="xs:string"/>
+                <xs:element name="content" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="submissionDate" type="xs:date"/>
+            <xs:attribute name="type">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="publication accepted"/>
+                        <xs:enumeration value="publication rejected"/>
+                        <xs:enumeration value="publication withdrawn"/>
+                        <xs:enumeration value="reviewer assigned"/>
+                        <xs:enumeration value="review submitted"/>
+                        <xs:enumeration value="revision submitted"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TParticipant">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="role">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="AUTHOR_ROLE"/>
+                        <xs:enumeration value="REVIEWER_ROLE"/>
+                        <xs:enumeration value="EDITOR_ROLE"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[^@]+@[^\.]+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

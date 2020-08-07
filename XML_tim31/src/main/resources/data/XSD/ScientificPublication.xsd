@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/XML/ScientificPublication"
+    xmlns:publ="http://www.ftn.uns.ac.rs/XML/ScientificPublication">
+
+    <xs:element name="scientificPublication">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="metadata">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" name="authors">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="authorUsername" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="reviewers">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="reviewerUsername" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="keywords"
+                                type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="chapter">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" name="paragraph">
+                                <xs:complexType>
+                                    <xs:choice>
+                                        <xs:element name="text" type="xs:string"/>
+                                        <xs:element name="citation">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="authorNames" type="xs:string"/>
+                                                  <xs:element name="year" type="xs:positiveInteger"/>
+                                                  <xs:element name="text" type="xs:string"/>
+                                                </xs:sequence>
+                                                <xs:attribute name="id" type="xs:integer"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:choice>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="reference">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="authorNames" type="xs:string"/>
+                            <xs:element name="publicationTitle" type="xs:string"/>
+                            <xs:element name="year" type="xs:positiveInteger"/>
+                            <xs:element name="url" type="xs:string"/>
+                        </xs:sequence>
+                        <xs:attribute name="citationId" type="xs:integer"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="publicationId" type="xs:string"/>
+            <xs:attribute name="submissionDate" type="xs:date"/>
+            <xs:attribute name="language" type="xs:string"/>
+            <xs:attribute default="reviewing" name="status">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="reviewing"/>
+                        <xs:enumeration value="revising"/>
+                        <xs:enumeration value="withdrawn"/>
+                        <xs:enumeration value="rejected"/>
+                        <xs:enumeration value="accepted"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
