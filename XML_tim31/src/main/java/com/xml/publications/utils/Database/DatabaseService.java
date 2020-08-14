@@ -17,9 +17,9 @@ import java.io.OutputStream;
 @Component
 public class DatabaseService {
 
-    public static final String USER_MODEL_PATH ="com.xml.publications.model/User";
-    public static final String USER_COLLECTION_PATH="/db/users";
-    public static final String USER_SCHEMA_PATH="data/schemas/User.xsd";
+    public static final String USER_MODEL_PATH ="com.xml.publications.model.User";
+    public static final String USER_COLLECTION_PATH="/db/publications/user";
+    public static final String USER_SCHEMA_PATH="data/XSD/User.xsd";
 
 
 

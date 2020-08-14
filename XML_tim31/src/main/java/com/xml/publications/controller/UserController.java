@@ -19,11 +19,12 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO){
+        String response;
         try{
-            userService.registerUser(userDTO);
+            response = userService.registerUser(userDTO);
         }catch (Exception e){
             return new ResponseEntity<String>("Invalid registration request" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<String>("Successful registration request", HttpStatus.OK);
+        return new ResponseEntity<String>(response , HttpStatus.OK);
     }
 }

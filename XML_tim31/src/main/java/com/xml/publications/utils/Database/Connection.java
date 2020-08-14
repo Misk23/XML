@@ -34,7 +34,6 @@ public class Connection {
         Database database = (Database) cl.newInstance();
         database.setProperty("create-database", "true");
         DatabaseManager.registerDatabase(database);
-
         Collection collection = null;
         XMLResource xmlResource = null;
 
