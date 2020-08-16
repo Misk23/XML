@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scientificPublication xmlns="http://www.ftn.uns.ac.rs/XML/ScientificPublication"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/XML/ScientificPublication file:/C:/Users/USER/Desktop/xml_projekat/XML/XML_tim31/src/main/resources/data/XSD/ScientificPublication.xsd" publicationId="publicationId2" submissionDate="2016-05-04" language="srpski" status="accepted">
+    <metadata>
+        <title>Dizajn paterni u javi</title>
+        <authors>
+            <authorUsername>zoran70</authorUsername>
+        </authors>
+        <reviewers>
+            <reviewerUsername>nikola123</reviewerUsername>
+        </reviewers>
+        <keywords>java</keywords>
+        <keywords>dizajn sabloni</keywords>
+        <keywords>arhitektura sistema</keywords>
+    </metadata>
+    <chapter>
+        <title>Osnovni sabloni dizajna</title>
+        <paragraph>
+            <text>paragraf 1</text>
+<!--            <citation id="0">
+                <authorNames>authorNames0</authorNames>
+                <year>50</year>
+                <text>text1</text>
+            </citation>-->
+        </paragraph>
+        <paragraph>
+            <text>paragraf 2</text>
+            <!--            <citation id="0">
+                <authorNames>authorNames0</authorNames>
+                <year>50</year>
+                <text>text1</text>
+            </citation>-->
+        </paragraph>
+    </chapter>
+</scientificPublication>
