@@ -1,11 +1,13 @@
 package com.xml.publications.service;
 
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 public interface ScientificPublicationService {
 
     List<ScientificPublication> basicSearchScientificPublication(String text);
+    String SavePublicationFromFile(MultipartFile xmlFile) throws IOException;
 }

@@ -18,7 +18,7 @@ public class UserRepository {
     public String saveUser(User user){
 
         if(!validator.validateUserAgainstSchema(user))
-            return "Given user is not valid";
+            return "Given user is not valid (schema validation)";
 
         try{
             if (databaseService.getUserById(user.getUsername()) != null)

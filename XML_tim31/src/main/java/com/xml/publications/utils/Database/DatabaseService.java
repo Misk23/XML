@@ -12,6 +12,7 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.*;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class DatabaseService {
 
     public static final String SCIENTIFIC_PUBLICATION_MODEL_PATH ="com.xml.publications.model.ScientificPublication";
     public static final String SCIENTIFIC_PUBLICATION_COLLECTION_PATH="/db/publications/scientificPublications";
+    public static final String SCIENTIFIC_PUBLICATION_SCHEMA_PATH="data/XSD/ScientificPublication.xsd";
 
 
     public User getUserById(String userId) throws Exception{
@@ -93,7 +95,55 @@ public class DatabaseService {
 
     }
 
+    public void savePublication(ScientificPublication scientificPublication) throws Exception {
 
+        Connection connection = new Connection();
+        Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+
+        XMLResource xmlResource = null;
+        Collection collection = null;
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+
+        try{
+            collection = connection.getOrCreateCollection(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            xmlResource = (XMLResource) collection.createResource(scientificPublication.getPublicationId(), XMLResource.RESOURCE_TYPE);
+
+            Marshaller marshaller = getMarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH, SCIENTIFIC_PUBLICATION_SCHEMA_PATH);
+            marshaller.marshal(scientificPublication, outputStream);
+
+            xmlResource.setContent(outputStream);
+            collection.storeResource(xmlResource);
+        }finally {
+            if (xmlResource != null){
+                try{
+                    ((EXistResource) xmlResource).freeResources();
+                }catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+            if (collection != null){
+                try {
+                    collection.close();
+                } catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public ScientificPublication getPublicationFromXML(File xmlFile){
+        try{
+            Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
+            return (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlFile));
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public List<ScientificPublication> basicSearchScientificPublication(String text) {
         ArrayList<ScientificPublication> scientificPublications = new ArrayList<ScientificPublication>();

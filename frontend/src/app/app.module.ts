@@ -21,6 +21,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/security/token-interceptor.service';
 import { LoginGuardGuard } from './services/security/login-guard.guard';
 import { UserService } from './services/user.service';
+import { PublicationUploadComponent } from './components/publication-upload/publication-upload.component';
 
 
 const appRoutes: Routes = [
@@ -36,6 +37,10 @@ const appRoutes: Routes = [
   {
     path: 'main',
     component: MainComponent
+  },
+  {
+    path: 'publication_upload',
+    component: PublicationUploadComponent
   }
 ]
 
@@ -44,7 +49,8 @@ const appRoutes: Routes = [
     AppComponent,
     MainComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    PublicationUploadComponent
   ],
   imports: [
     BrowserModule,

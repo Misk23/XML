@@ -34,4 +34,17 @@ export class AppComponent implements OnInit{
     this.router.navigate(['/login']);
   }
 
+  isAuthor(){
+    const roles = this.authService.getRoles();
+    if(roles.includes('AUTHOR_ROLE')){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  uploadPublication(){
+    this.router.navigate(['/publication_upload']);
+  }
+
 }

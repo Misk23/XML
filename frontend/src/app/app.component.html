@@ -4,6 +4,7 @@
       <a class="navbar-brand" href="/main">XML Publications</a>
     </div>
     <ul class= "navbar-nav">
+      <li class = "nav-item"><a class= "nav-link" *ngIf="isAuthor()" (click)="uploadPublication()" id="upload_publication">Submit Scientific Publication</a></li>
       
     </ul>
     <ul class="nav navbar-nav navbar-right">
