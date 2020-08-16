@@ -1,9 +1,11 @@
 package com.xml.publications.service;
 
 import com.xml.publications.DTO.UserDTO;
+import com.xml.publications.model.User.User;
 
 
 public interface UserService {
 
-    public String registerUser(UserDTO userDTO);
+    String registerUser(UserDTO userDTO);
+    User findByUsername(String username);
 }

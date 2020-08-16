@@ -1,0 +1,19 @@
+<nav class="navbar-expand-md">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/main">XML Publications</a>
+    </div>
+    <ul class= "navbar-nav">
+      
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a *ngIf="!loggedIn()" href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li><a *ngIf="!loggedIn()" href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a *ngIf="loggedIn()" (click)="logout()" id="logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a><li>
+    </ul>
+    
+  </div>
+</nav>
+<div>
+  <router-outlet></router-outlet>
+</div>

@@ -17,6 +17,13 @@ public class UserServiceImpl implements UserService {
 
     public String registerUser(UserDTO userDTO){
 
+        System.out.println(userDTO.getUsername());
+        System.out.println(userDTO.getEmail());
+        System.out.println(userDTO.getPassword());
+        System.out.println(userDTO.getRole());
+        System.out.println(userDTO.getFirst_name());
+        System.out.println(userDTO.getLast_name());
+
         User user = (new ObjectFactory()).createUser();
         user.setUsername(userDTO.getUsername());
         BCryptPasswordEncoder coder = new BCryptPasswordEncoder();
@@ -30,5 +37,10 @@ public class UserServiceImpl implements UserService {
         user.setReviewPublications((new ObjectFactory()).createTPublications());
 
         return userRepository.saveUser(user);
+    }
+
+    public User findByUsername(String username) {
+
+        return userRepository.findByUsername(username);
     }
 }

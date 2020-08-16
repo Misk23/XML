@@ -1,0 +1,64 @@
+<div class="col-md-9 personal-info">
+    <h3>Registration Request</h3>
+    <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Username:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="Username" name="username" [(ngModel)]="registerRequest.username" required>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.username" style="color:red">Username must be between 3 and 20 characters..</p>
+               <p class="alert alert-warning box-msg" *ngIf="error_messages.username_taken" style="color:red">Username taken</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Password:</label>
+            <div class="col-md-8">
+                 <input class="form-control" type="password" id="password" name="password" [(ngModel)]="registerRequest.password">
+                 <p class="alert alert-warning box-msg" *ngIf="error_messages.password" style="color:red">Password must be between 3 and 20 characters...</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Confirm password:</label>
+            <div class="col-md-8">
+                 <input class="form-control" type="password" id="confirm_password"  name="confirm_password" [(ngModel)]="registerRequest.confirm_password">
+                 <p class="alert alert-warning box-msg" *ngIf="error_messages.confirm_password" style="color:red">Password repetition incorrect...</p>
+            </div>
+        </div>  
+        <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="first_name" name="first_name" [(ngModel)]="registerRequest.first_name">
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.name" style="color:red">Name must be between 3 and 20 characters..</p>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.name_not_letter" style="color:red">Please enter valid name</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+                <input class="form-control" type="text" id="last_name" name="last_name" [(ngModel)]="registerRequest.last_name">
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.last_name"  style="color:red">Last name must be between 3 and 20 characters..</p>
+                <p class="alert alert-warning box-msg" *ngIf="error_messages.last_name_not_letter" style="color:red">Please enter valid last name</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="email" id="email" name="email" [(ngModel)]="registerRequest.email">
+            </div>
+         </div>
+
+         <div class="form-group">
+            <label class="col-md-6 control-label">Role:</label>
+            <select id= "roles" name="roles" [(ngModel)]="registerRequest.role" style="display: inline-block" class="ml-1 mb-4">
+              <option *ngFor="let key of rolesTypeOptions" [value]="key" [label]="roles[key]"></option>
+            </select>
+          </div>
+        
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-8">
+            <input type="button" class="btn btn-primary" value="Register" (click) = "register()">
+            <span></span>
+          </div>
+        </div>
+    </form>
+  </div>

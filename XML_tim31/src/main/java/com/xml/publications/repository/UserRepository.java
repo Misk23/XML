@@ -31,4 +31,13 @@ public class UserRepository {
         }
         return "Saving user successful";
     }
+
+    public User findByUsername(String username) {
+        try {
+            return databaseService.getUserById(username);
+        } catch (Exception e) {
+            System.out.println("Finding user EXCEPTION");
+            return null;
+        }
+    }
 }
