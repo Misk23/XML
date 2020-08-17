@@ -30,14 +30,32 @@ public class ScientificPublicationRepository {
 
     public String savePublicationFromFile(File xmlFile){
 
-        ScientificPublication scientificPublication = databaseService.getPublicationFromXML(xmlFile);
+        ScientificPublication scientificPublication = databaseService.getPublicationFromXMLFile(xmlFile);
 
         if (scientificPublication == null)
-            return "Class from xml failure";
+            return "Publication class from xml file failure";
 
         if ( !validator.validatePublicationAgainstSchema(scientificPublication))
             return "Given publication is not valid (schema validation)";
 
+        try{
+            savePublication(scientificPublication);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "Saving publication unsuccessful";
+        }
+
+        return "Saving publication successful";
+    }
+
+    public String savePublicationFromText(String xmlFile){
+
+        ScientificPublication scientificPublication = databaseService.getPublicationFromXMLString(xmlFile);
+        if (scientificPublication == null)
+            return "Publication class from xml string failure";
+
+        if ( !validator.validatePublicationAgainstSchema(scientificPublication))
+            return "Given publication is not valid (schema validation)";
         try{
             savePublication(scientificPublication);
         }catch (Exception e){

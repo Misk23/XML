@@ -1,5 +1,6 @@
 package com.xml.publications.utils.Database;
 
+import com.xml.publications.model.CoverLetter.CoverLetter;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.User.User;
 import com.xml.publications.utils.Authentication.AuthenticationUtilities;
@@ -29,6 +30,10 @@ public class DatabaseService {
     public static final String SCIENTIFIC_PUBLICATION_MODEL_PATH ="com.xml.publications.model.ScientificPublication";
     public static final String SCIENTIFIC_PUBLICATION_COLLECTION_PATH="/db/publications/scientificPublications";
     public static final String SCIENTIFIC_PUBLICATION_SCHEMA_PATH="data/XSD/ScientificPublication.xsd";
+
+    public static final String COVER_LETTER_MODEL_PATH = "com.xml.publications.model.CoverLetter";
+    public static final String COVER_LETTER_COLLECTION_PATH = "/db/publications/coverLetters";
+    public static final String COVER_LETTER_SCHEMA_PATH="data/XSD/CoverLetter.xsd";
 
 
     public User getUserById(String userId) throws Exception{
@@ -135,11 +140,83 @@ public class DatabaseService {
 
     }
 
-    public ScientificPublication getPublicationFromXML(File xmlFile){
+    public void saveCoverLetter(CoverLetter coverLetter) throws Exception{
+
+
+        Connection connection = new Connection();
+        Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+
+        XMLResource xmlResource = null;
+        Collection collection = null;
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+
+        try{
+            collection = connection.getOrCreateCollection(COVER_LETTER_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            xmlResource = (XMLResource) collection.createResource(coverLetter.getCoverLetterId(), XMLResource.RESOURCE_TYPE);
+
+            Marshaller marshaller = getMarshaller(COVER_LETTER_MODEL_PATH, COVER_LETTER_SCHEMA_PATH);
+            marshaller.marshal(coverLetter, outputStream);
+
+            xmlResource.setContent(outputStream);
+            collection.storeResource(xmlResource);
+        }finally {
+            if (xmlResource != null){
+                try{
+                    ((EXistResource) xmlResource).freeResources();
+                }catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+            if (collection != null){
+                try {
+                    collection.close();
+                } catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public ScientificPublication getPublicationFromXMLFile(File xmlFile){
         try{
             Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
             return (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlFile));
         } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public CoverLetter getCoverLetterFromXMLFile(File xmlFile){
+        try{
+            Unmarshaller unmarshaller = getUnmarshaller(COVER_LETTER_MODEL_PATH);
+            return (CoverLetter) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlFile));
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ScientificPublication getPublicationFromXMLString(String xmlFile){
+        try{
+            Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
+            return (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(new StringReader(xmlFile)));
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public CoverLetter getCoverLetterFromXMLString(String xmlFile){
+        try{
+            Unmarshaller unmarshaller = getUnmarshaller(COVER_LETTER_MODEL_PATH);
+            return (CoverLetter) JAXBIntrospector.getValue(unmarshaller.unmarshal(new StringReader(xmlFile)));
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }
@@ -187,7 +264,6 @@ public class DatabaseService {
 
         return scientificPublications;
     }
-
 
     public Marshaller getMarshaller(String modelPath,String schemaPath) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(modelPath);

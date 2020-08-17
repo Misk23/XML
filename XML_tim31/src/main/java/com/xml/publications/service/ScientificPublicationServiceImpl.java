@@ -25,18 +25,20 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
         return scientificPublicationRepository.basicSearchScientificPublication(text);
     }
 
-    public String SavePublicationFromFile(MultipartFile xmlFile) throws IOException {
+    public String savePublicationFromFile(MultipartFile xmlFile) throws IOException {
 
         File xmlFileContents;
-        xmlFileContents = new ClassPathResource("data/pomfile.txt").getFile();
+        xmlFileContents = new ClassPathResource("data/pubicationpomfile.txt").getFile();
         xmlFileContents.createNewFile();
         FileOutputStream fileOutputStream = new FileOutputStream(xmlFileContents);
         fileOutputStream.write(xmlFile.getBytes());
         fileOutputStream.close();
 
         return scientificPublicationRepository.savePublicationFromFile(xmlFileContents);
+    }
 
-
+    public String savePublicationFromText(String xmlFile){
+        return scientificPublicationRepository.savePublicationFromText(xmlFile);
     }
 
 }

@@ -40,6 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
 			httpSecurity.csrf().disable()
 			.authorizeRequests()
+			.antMatchers("/coverLetter/save_as_XMLString").permitAll()
+			.antMatchers("/coverLetter/save_as_XML").permitAll()
+			.antMatchers("/scientificPublication/save_as_XMLString").permitAll()
 			.antMatchers("/scientificPublication/save_as_XML").permitAll()
 			.antMatchers("/user/register").permitAll()
 			.antMatchers("/user/login").permitAll().anyRequest()

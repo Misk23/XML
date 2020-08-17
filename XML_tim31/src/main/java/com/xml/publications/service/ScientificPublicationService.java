@@ -9,5 +9,6 @@ import java.util.List;
 public interface ScientificPublicationService {
 
     List<ScientificPublication> basicSearchScientificPublication(String text);
-    String SavePublicationFromFile(MultipartFile xmlFile) throws IOException;
+    String savePublicationFromFile(MultipartFile xmlFile) throws IOException;
+    String savePublicationFromText(String xmlFile);
 }

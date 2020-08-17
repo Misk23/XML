@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -32,10 +29,21 @@ public class ScientificPublicationController {
     }
 
     @RequestMapping(value = "/save_as_XML", method = RequestMethod.POST, consumes = "multipart/form-data")
-    public ResponseEntity SavePublicationFromFile(@RequestParam("file") MultipartFile xmlFile){
+    public ResponseEntity savePublicationFromFile(@RequestParam("file") MultipartFile xmlFile){
         String response;
         try{
-            response = scientificPublicationService.SavePublicationFromFile(xmlFile);
+            response = scientificPublicationService.savePublicationFromFile(xmlFile);
+        }catch (Exception e){
+            return new ResponseEntity<String>("Invalid publication request" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>(response , HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/save_as_XMLString", method = RequestMethod.POST)
+    public ResponseEntity savePublicationFromText(@RequestBody String xmlFile){
+        String response;
+        try{
+            response = scientificPublicationService.savePublicationFromText(xmlFile);
         }catch (Exception e){
             return new ResponseEntity<String>("Invalid publication request" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
