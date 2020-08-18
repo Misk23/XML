@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="ScientificPublication.xsl"?>
+<sp:scientificPublication xmlns:sp="http://www.ftn.uns.ac.rs/XML/ScientificPublication" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ftn.uns.ac.rs/XML/ScientificPublication file:/C:/Users/USER/Desktop/xml_projekat/XML/XML_tim31/src/main/resources/data/XSD/ScientificPublication.xsd" publicationId="publicationId1" submissionDate="2018-05-04" language="srpski" status="accepted">
+    <sp:metadata>
+
+        <sp:title>Agilne metodologije u softverskom inzenjerstvu </sp:title>
+        <sp:authors>
+            <sp:authorUsername>nikola123</sp:authorUsername>
+
+        </sp:authors>
+
+        <sp:authors>
+            <sp:authorUsername>branko</sp:authorUsername>
+        </sp:authors>
+
+        <sp:reviewers>
+            <sp:reviewerUsername>petar123</sp:reviewerUsername>
+
+        </sp:reviewers>
+
+        <sp:keywords>programiranje</sp:keywords>
+        <sp:keywords>softveversko inzenjerstvo</sp:keywords>
+        <sp:keywords>agilni razvoj</sp:keywords>
+    </sp:metadata>
+    <sp:chapter>
+        <sp:title>Uvod u agilne metodologije</sp:title>
+        <sp:paragraph>
+            <sp:text>tekst 1 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
+            <!--            <citation id="0">
+                            <authorNames>authorNames0</authorNames>
+                            <authorNames>authorNames1</authorNames>
+                            <year>50</year>
+                            <text>text1</text>
+                        </citation>-->
+        </sp:paragraph>
+        <sp:paragraph>
+            <sp:text>tekst 2 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
+            <!--            <citation id="0">
+                            <authorNames>authorNames2</authorNames>
+                            <authorNames>authorNames3</authorNames>
+                            <year>50</year>
+                            <text>text3</text>
+                        </citation>-->
+        </sp:paragraph>
+    </sp:chapter>
+    <sp:chapter>
+        <sp:title>Napredni koncepti agilnog razvoja softvera</sp:title>
+        <sp:paragraph>
+            <sp:text>tekst o naprednim tehnikama razvoja softvera</sp:text>
+            <!--            <citation id="0">
+                            <authorNames>authorNames4</authorNames>
+                            <authorNames>authorNames5</authorNames>
+                            <year>50</year>
+                            <text>text5</text>
+                        </citation>-->
+        </sp:paragraph>
+        <sp:paragraph>
+            <!--            <text>text6</text>-->
+            <sp:citation id="0">
+                <sp:authorNames>Marko Markovic</sp:authorNames>
+                <sp:year>2019</sp:year>
+                <sp:text>tekst koji je citiran</sp:text>
+            </sp:citation>
+
+        </sp:paragraph>
+    </sp:chapter>
+    <sp:reference citationId="0">
+        <sp:authorNames>Marko Markovic</sp:authorNames>
+        <sp:publicationTitle>naslov rada gdje citiran tekst</sp:publicationTitle>
+        <sp:year>2019</sp:year>
+        <sp:url>link do rada</sp:url>
+    </sp:reference>
+</sp:scientificPublication>

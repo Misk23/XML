@@ -45,6 +45,10 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
         return scientificPublicationRepository.getMyPublications(username);
     }
 
+    public String showPublication(String publicationId){
+        return scientificPublicationRepository.showPublication(publicationId);
+    }
+
     public  String changePublicationStatus(String publicationId, String status){
         return scientificPublicationRepository.changeStatus(publicationId, status);
     }

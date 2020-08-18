@@ -1,10 +1,6 @@
 package com.xml.publications.utils.Transformer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,6 +18,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.xml.publications.model.ScientificPublication.ScientificPublication;
 
 
 /**
@@ -36,8 +33,8 @@ public class PDFTransformer {
 	
 	private static TransformerFactory transformerFactory;
 
-	
-	public static final String HTML_FILE = "gen/itext/bookstore.html";
+
+	public static final String HTML_FILE = "src/main/java/scientificPublication.html";
 
 
 	static {
@@ -47,44 +44,44 @@ public class PDFTransformer {
 		documentFactory.setNamespaceAware(true);
 		documentFactory.setIgnoringComments(true);
 		documentFactory.setIgnoringElementContentWhitespace(true);
-		
+
 		/* Inicijalizacija Transformer fabrike */
 		transformerFactory = TransformerFactory.newInstance();
-		
+
 	}
- 
-    /**
-     * Creates a PDF using iText Java API
-     * @param filePath
-     * @throws IOException
-     * @throws DocumentException
-     */
-    public void generatePDF(String filePath) throws IOException, DocumentException {
-        
-    	// Step 1
-    	Document document = new Document();
-        
-    	// Step 2
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
-        
-        // Step 3
-        document.open();
-        
-        // Step 4
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_FILE));
-        
-        // Step 5
-        document.close();
-        
-    }
 
-    public org.w3c.dom.Document buildDocument(String filePath) {
+	/**
+	 * Creates a PDF using iText Java API
+	 * @param filePath
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
+	public void generatePDF(String filePath) throws IOException, DocumentException {
 
-    	org.w3c.dom.Document document = null;
+		// Step 1
+		Document document = new Document();
+
+		// Step 2
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+		// Step 3
+		document.open();
+
+		// Step 4
+		XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_FILE));
+
+		// Step 5
+		document.close();
+
+	}
+
+	public org.w3c.dom.Document buildDocument(String filePath) {
+
+		org.w3c.dom.Document document = null;
 		try {
-			
+
 			DocumentBuilder builder = documentFactory.newDocumentBuilder();
-			document = builder.parse(new File(filePath)); 
+			document = builder.parse(new File(filePath));
 
 			if (document != null)
 				System.out.println("[INFO] File parsed with no errors.");
@@ -93,14 +90,14 @@ public class PDFTransformer {
 
 		} catch (Exception e) {
 			return null;
-			
-		} 
+
+		}
 
 		return document;
 	}
-    
-    public void generateHTML(String xmlPath, String xslPath) throws FileNotFoundException {
-    	
+
+	public void generateScientificPublicationHTML(DOMSource source, String xslPath) throws FileNotFoundException {
+
 		try {
 
 			// Initialize Transformer instance
@@ -108,15 +105,14 @@ public class PDFTransformer {
 			Transformer transformer = transformerFactory.newTransformer(transformSource);
 			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			
+
 			// Generate XHTML
 			transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
 
-			// Transform DOM to HTML
-			DOMSource source = new DOMSource(buildDocument(xmlPath));
+
 			StreamResult result = new StreamResult(new FileOutputStream(HTML_FILE));
 			transformer.transform(source, result);
-			
+
 		} catch (TransformerConfigurationException e) {
 			e.printStackTrace();
 		} catch (TransformerFactoryConfigurationError e) {
@@ -124,6 +120,58 @@ public class PDFTransformer {
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
-    
-    }
+
+	}
+
+
+
+	public void generateHTML(String xmlPath, String xslPath) throws FileNotFoundException {
+
+		try {
+
+			// Initialize Transformer instance
+			StreamSource transformSource = new StreamSource(new File(xslPath));
+			Transformer transformer = transformerFactory.newTransformer(transformSource);
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+			// Generate XHTML
+			transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+
+			// Transform DOM to HTML
+			DOMSource source = new DOMSource(buildDocument(xmlPath));
+			StreamResult result = new StreamResult(new FileOutputStream(HTML_FILE));
+			transformer.transform(source, result);
+
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void main(String[] args) throws IOException, DocumentException {
+
+		System.out.println("[INFO] " + PDFTransformer.class.getSimpleName());
+
+		// Creates parent directory if necessary
+		File pdfFile = new File("src/main/java/scientificPublication.pdf");
+
+		if (!pdfFile.getParentFile().exists()) {
+			System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
+			pdfFile.getParentFile().mkdir();
+		}
+
+		PDFTransformer pdfTransformer = new PDFTransformer();
+
+		pdfTransformer.generateHTML("src/main/resources/data/publicationFile.xml", "src/main/resources/data/ScientificPublication.xsl");
+		pdfTransformer.generatePDF("src/main/java/scientificPublication.pdf");
+
+		System.out.println("[INFO] File \"" + "src/main/java/scientificPublication.pdf" + "\" generated successfully.");
+		System.out.println("[INFO] End.");
+	}
 }
+

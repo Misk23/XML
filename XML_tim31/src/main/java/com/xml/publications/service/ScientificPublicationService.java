@@ -13,4 +13,5 @@ public interface ScientificPublicationService {
     String savePublicationFromText(String xmlFile);
     List<ScientificPublication> getMyPublications(String username);
     String changePublicationStatus(String publicationId, String status);
+    String showPublication(String publicationId);
 }

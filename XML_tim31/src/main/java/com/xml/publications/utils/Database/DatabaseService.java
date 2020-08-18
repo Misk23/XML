@@ -12,6 +12,7 @@ import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.*;
+import javax.xml.transform.dom.DOMSource;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
@@ -324,6 +325,27 @@ public class DatabaseService {
 
         try{
             return (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlResource.getContentAsDOM()));
+        }catch (NullPointerException ne){
+            return null;
+        }
+    }
+
+
+    public DOMSource getPublicationAsDom(String publicationId) throws Exception{
+
+        Connection connection = new Connection();
+        XMLResource xmlResource;
+
+        try{
+            xmlResource = connection.getResourceById(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, publicationId, AuthenticationUtilities.loadProperties());
+        }catch (NullPointerException ne){
+            ne.printStackTrace();
+            return null;
+        }
+
+        try{
+            DOMSource domSource = new DOMSource(xmlResource.getContentAsDOM());
+            return domSource;
         }catch (NullPointerException ne){
             return null;
         }
