@@ -66,5 +66,37 @@ public class ScientificPublicationRepository {
         return "Saving publication successful";
     }
 
+    public List<ScientificPublication> getMyPublications(String username){
+        System.out.println(username);
+        return databaseService.getPublicationsByUsername(username);
+    }
+
+    public String changeStatus(String id, String status){
+        ScientificPublication scientificPublication;
+        try{
+            System.out.println(id);
+            scientificPublication = databaseService.getPublicationById(id);
+        } catch (Exception e){
+            e.printStackTrace();
+            return "Publication with given id not found";
+        }
+        System.out.println(status);
+        scientificPublication.setStatus(status);
+        if (!validator.validatePublicationAgainstSchema(scientificPublication)) {
+            System.out.println("greska u validaciji");
+            return "New publication not valid (schema validaton)";
+        }
+        try {
+            savePublication(scientificPublication);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "Saving publication unsuccessful";
+        }
+        return "Saving publication successful";
+    }
+
+
+
+
 
 }

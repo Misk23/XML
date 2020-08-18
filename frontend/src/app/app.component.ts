@@ -46,5 +46,8 @@ export class AppComponent implements OnInit{
   uploadPublication(){
     this.router.navigate(['/publication_upload']);
   }
+  showPublications(){
+    this.router.navigate(['/my_publications']);
+  }
 
 }

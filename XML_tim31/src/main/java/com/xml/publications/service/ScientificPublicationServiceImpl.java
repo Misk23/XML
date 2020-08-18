@@ -41,4 +41,12 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
         return scientificPublicationRepository.savePublicationFromText(xmlFile);
     }
 
+    public List<ScientificPublication> getMyPublications(String username){
+        return scientificPublicationRepository.getMyPublications(username);
+    }
+
+    public  String changePublicationStatus(String publicationId, String status){
+        return scientificPublicationRepository.changeStatus(publicationId, status);
+    }
+
 }

@@ -265,6 +265,70 @@ public class DatabaseService {
         return scientificPublications;
     }
 
+    public List<ScientificPublication> getPublicationsByUsername(String username) {
+        ArrayList<ScientificPublication> scientificPublications = new ArrayList<ScientificPublication>();
+        try {
+            Connection connection = new Connection();
+            Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+            DatabaseManager.registerDatabase(database);
+
+            Collection col = connection.getOrCreateCollection(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/ScientificPublication");
+            ResourceSet result = xpathService.query("//scientificPublication[./metadata/authors[authorUsername='" + username + "']]");
+
+            ResourceIterator it = result.getIterator();
+            Resource res = null;
+
+            while (it.hasMoreResources()) {
+                try {
+                    res = it.nextResource();
+                    Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
+                    StringReader reader = new StringReader(res.getContent().toString());
+                    ScientificPublication scientificPublication = (ScientificPublication) unmarshaller.unmarshal(reader);
+                    scientificPublications.add(scientificPublication);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return scientificPublications;
+    }
+
+    public ScientificPublication getPublicationById(String publicationId) throws Exception{
+
+        Connection connection = new Connection();
+        XMLResource xmlResource;
+
+        try{
+            xmlResource = connection.getResourceById(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, publicationId, AuthenticationUtilities.loadProperties());
+        }catch (NullPointerException ne){
+            ne.printStackTrace();
+            return null;
+        }
+
+        Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
+
+        try{
+            return (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlResource.getContentAsDOM()));
+        }catch (NullPointerException ne){
+            return null;
+        }
+    }
+
     public Marshaller getMarshaller(String modelPath,String schemaPath) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(modelPath);
         Marshaller marshaller = context.createMarshaller();

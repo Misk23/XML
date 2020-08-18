@@ -50,5 +50,15 @@ public class ScientificPublicationController {
         return new ResponseEntity<String>(response , HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/my_publications/{username}", method = RequestMethod.GET)
+    public ResponseEntity<List<ScientificPublication>> getMyPublications(@PathVariable String username){
+        return new ResponseEntity<List<ScientificPublication>>(scientificPublicationService.getMyPublications(username), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/withdraw/{id}", method = RequestMethod.GET)
+    public ResponseEntity<String> withdrawPublication(@PathVariable String id){
+        return new ResponseEntity<String>(scientificPublicationService.changePublicationStatus(id, "withdrawn"), HttpStatus.OK);
+    }
+
 
 }

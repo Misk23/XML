@@ -22,6 +22,7 @@ import { TokenInterceptorService } from './services/security/token-interceptor.s
 import { LoginGuardGuard } from './services/security/login-guard.guard';
 import { UserService } from './services/user.service';
 import { PublicationUploadComponent } from './components/publication-upload/publication-upload.component';
+import { UserPublicationComponent } from './components/user-publication/user-publication.component';
 
 
 const appRoutes: Routes = [
@@ -41,6 +42,10 @@ const appRoutes: Routes = [
   {
     path: 'publication_upload',
     component: PublicationUploadComponent
+  },
+  {
+    path: 'my_publications',
+    component: UserPublicationComponent
   }
 ]
 
@@ -50,7 +55,8 @@ const appRoutes: Routes = [
     MainComponent,
     RegisterComponent,
     LoginComponent,
-    PublicationUploadComponent
+    PublicationUploadComponent,
+    UserPublicationComponent
   ],
   imports: [
     BrowserModule,

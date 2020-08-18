@@ -1,0 +1,25 @@
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">My Publications</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>  </th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let publication of publications; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ publication.metadata.title}}</td>
+                    <td>{{ publication.status}}</td>
+                    <td><button type="button" class="btn btn-primary"  id="show" ><i class="far fa-eye">Show Publication</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="withdraw" (click) = "onWithdraw(publication.publicationId)" ><i class="far fa-eye">Withdraw Publication</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
