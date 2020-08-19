@@ -101,17 +101,16 @@ public class ScientificPublicationRepository {
 
     public String showPublication(String publicationId){
         PDFTransformer pdfTransformer = new PDFTransformer();
-        System.out.println("repozitorijum");
 
         try {
             DOMSource domSource =  databaseService.getPublicationAsDom(publicationId);
 
             File htmlFile = new File("src/main/java/scientificPublication.html");
 
+
             pdfTransformer.generateScientificPublicationHTML(domSource,"src/main/resources/data/ScientificPublication.xsl");
 
             pdfTransformer.generatePDF("src/main/java/scientificPublication.pdf");
-
 
             return htmlFile.getAbsolutePath();
 

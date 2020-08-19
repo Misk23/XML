@@ -30,4 +30,8 @@ export class ScientificPublicationService {
     return this.http.get(this.basePath + '/withdraw/' + publication, {responseType: 'text'});
   }
 
+  showPublication(publication: string){
+    return this.http.get(this.basePath + '/showPublication/' + publication, {responseType: 'text'});
+  }
+
 }

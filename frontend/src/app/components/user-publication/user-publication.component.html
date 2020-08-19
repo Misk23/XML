@@ -16,7 +16,7 @@
                     <th scope="row">{{ i + 1 }}</th>
                     <td>{{ publication.metadata.title}}</td>
                     <td>{{ publication.status}}</td>
-                    <td><button type="button" class="btn btn-primary"  id="show" ><i class="far fa-eye">Show Publication</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="show" (click) = "onShowPublication(publication.publicationId)" ><i class="far fa-eye">Show Publication</i></button></td>
                     <td><button type="button" class="btn btn-primary"  id="withdraw" (click) = "onWithdraw(publication.publicationId)" ><i class="far fa-eye">Withdraw Publication</i></button></td>
                 </tr>
             </tbody>

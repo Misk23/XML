@@ -4,6 +4,7 @@ import com.xml.publications.model.CoverLetter.CoverLetter;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.User.User;
 import com.xml.publications.utils.Authentication.AuthenticationUtilities;
+import com.xml.publications.utils.Transformer.PDFTransformer;
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
@@ -332,9 +333,8 @@ public class DatabaseService {
 
 
     public DOMSource getPublicationAsDom(String publicationId) throws Exception{
-
         Connection connection = new Connection();
-        XMLResource xmlResource;
+        XMLResource xmlResource = null;
 
         try{
             xmlResource = connection.getResourceById(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, publicationId, AuthenticationUtilities.loadProperties());

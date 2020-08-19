@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.List;
 
 @RestController
@@ -55,9 +57,24 @@ public class ScientificPublicationController {
         return new ResponseEntity<List<ScientificPublication>>(scientificPublicationService.getMyPublications(username), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/showPublication/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/showPublication/{id}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> showPublication(@PathVariable String id){
-        return new ResponseEntity<String>(scientificPublicationService.showPublication(id), HttpStatus.OK);
+
+        String path = scientificPublicationService.showPublication(id);
+
+        BufferedReader in = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            in = new BufferedReader(new FileReader(path));
+            String line = "";
+            while((line = in.readLine()) != null){
+                sb.append(line);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/withdraw/{id}", method = RequestMethod.GET)

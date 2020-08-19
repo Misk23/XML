@@ -39,4 +39,15 @@ export class UserPublicationComponent implements OnInit {
     );
   }
 
+
+  onShowPublication(publication: string){
+
+    this.scientificPublicationService.showPublication(publication).subscribe( publicationHtmlContent =>{
+        localStorage.setItem('publicationHtmlContent', publicationHtmlContent);
+
+        window.open('publicationHtmlContent','_blank');
+    }
+    );
+  }
+
 }

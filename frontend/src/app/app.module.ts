@@ -23,6 +23,7 @@ import { LoginGuardGuard } from './services/security/login-guard.guard';
 import { UserService } from './services/user.service';
 import { PublicationUploadComponent } from './components/publication-upload/publication-upload.component';
 import { UserPublicationComponent } from './components/user-publication/user-publication.component';
+import { HtmlContentComponent } from './components/user-publication/htmlContent';
 
 
 const appRoutes: Routes = [
@@ -46,7 +47,12 @@ const appRoutes: Routes = [
   {
     path: 'my_publications',
     component: UserPublicationComponent
-  }
+  },
+  {
+    path: 'publicationHtmlContent',
+    component: HtmlContentComponent
+  },
+
 ]
 
 @NgModule({
@@ -56,7 +62,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     LoginComponent,
     PublicationUploadComponent,
-    UserPublicationComponent
+    UserPublicationComponent,
+    HtmlContentComponent
   ],
   imports: [
     BrowserModule,
