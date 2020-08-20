@@ -62,6 +62,26 @@ public class DatabaseService {
         }
     }
 
+    public Workflow findWorkflowByPublication(String publicationId) throws Exception{
+        Connection connection = new Connection();
+        XMLResource xmlResource;
+
+        try{
+            xmlResource = connection.getResourceById(WORKFLOW_COLLECTION_PATH, publicationId, AuthenticationUtilities.loadProperties());
+        }catch (NullPointerException ne){
+            ne.printStackTrace();
+            return null;
+        }
+
+        Unmarshaller unmarshaller = getUnmarshaller(WORKFLOW_MODEL_PATH);
+
+        try{
+            return (Workflow) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlResource.getContentAsDOM()));
+        }catch (NullPointerException ne){
+            return null;
+        }
+    }
+
 
     public void saveUser(User user) throws Exception {
 
@@ -351,6 +371,49 @@ public class DatabaseService {
         }
 
         return scientificPublications;
+    }
+
+    public List<Workflow> getAllWorkflows(){
+        ArrayList<Workflow> workflows = new ArrayList<Workflow>();
+        try {
+            Connection connection = new Connection();
+            Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+            DatabaseManager.registerDatabase(database);
+
+            Collection col = connection.getOrCreateCollection(WORKFLOW_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/Workflow");
+            ResourceSet result = xpathService.query("//workflow");
+
+            ResourceIterator it = result.getIterator();
+            Resource res = null;
+
+            while (it.hasMoreResources()) {
+                try {
+                    res = it.nextResource();
+                    Unmarshaller unmarshaller = getUnmarshaller(WORKFLOW_MODEL_PATH);
+                    StringReader reader = new StringReader(res.getContent().toString());
+                    Workflow workflow = (Workflow) unmarshaller.unmarshal(reader);
+                    workflows.add(workflow);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return workflows;
     }
 
     public ScientificPublication getPublicationById(String publicationId) throws Exception{

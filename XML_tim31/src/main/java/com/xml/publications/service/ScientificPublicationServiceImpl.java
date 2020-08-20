@@ -1,7 +1,9 @@
 package com.xml.publications.service;
 
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
+import com.xml.publications.model.Workflow.Workflow;
 import com.xml.publications.repository.ScientificPublicationRepository;
+import com.xml.publications.repository.WorkflowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
 
     @Autowired
     private ScientificPublicationRepository scientificPublicationRepository;
+
+    @Autowired
+    private WorkflowRepository workflowRepository;
 
 
     public List<ScientificPublication> basicSearchScientificPublication(String text){
@@ -38,6 +43,9 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
     }
 
     public String savePublicationFromText(String xmlFile){
+
+
+
         return scientificPublicationRepository.savePublicationFromText(xmlFile);
     }
 
@@ -49,7 +57,12 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
         return scientificPublicationRepository.showPublication(publicationId);
     }
 
-    public  String changePublicationStatus(String publicationId, String status){
+    public  String changePublicationStatus(String publicationId, String status) throws Exception {
+        Workflow workflow = workflowRepository.findByPublicationId(publicationId);
+        System.out.println("Evo me");
+        System.out.println(workflow.getStatus());
+        workflow.setStatus(status);
+        workflowRepository.save(workflow);
         return scientificPublicationRepository.changeStatus(publicationId, status);
     }
 

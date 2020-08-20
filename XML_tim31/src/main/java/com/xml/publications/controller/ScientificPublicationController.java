@@ -78,7 +78,7 @@ public class ScientificPublicationController {
     }
 
     @RequestMapping(value = "/withdraw/{id}", method = RequestMethod.GET)
-    public ResponseEntity<String> withdrawPublication(@PathVariable String id){
+    public ResponseEntity<String> withdrawPublication(@PathVariable String id) throws Exception {
         return new ResponseEntity<String>(scientificPublicationService.changePublicationStatus(id, "withdrawn"), HttpStatus.OK);
     }
 

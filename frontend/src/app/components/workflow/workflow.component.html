@@ -1,0 +1,32 @@
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">All Workflows</h2>
+        <table class="table table-striped" id = "mark">
+            <thead>
+                <tr>
+                    <th>  </th>
+                    <th>Publication ID</th>
+                    <th>Status</th>
+                    <th>Authors</th>
+                    <th>Reviewers</th>
+                    <th>  </th>
+                    <th>  </th>
+                    <th>  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let workflow of workflows; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ workflow.publicationId}}</td>
+                    <td>{{ workflow.status}}</td>
+                    <td>{{ workflow.authors.authorUsername}}</td>
+                    <td>{{ workflow.reviewers.reviewerUsername}}</td>
+                    <td><button type="button" class="btn btn-primary"  id="accept"  ><i class="far fa-eye">Accept</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="reject"  ><i class="far fa-eye">Reject</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="add_reviewer"  ><i class="far fa-eye">Add Reviewer</i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+

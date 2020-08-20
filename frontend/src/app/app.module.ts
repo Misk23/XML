@@ -24,6 +24,7 @@ import { UserService } from './services/user.service';
 import { PublicationUploadComponent } from './components/publication-upload/publication-upload.component';
 import { UserPublicationComponent } from './components/user-publication/user-publication.component';
 import { HtmlContentComponent } from './components/user-publication/htmlContent';
+import { WorkflowComponent } from './components/workflow/workflow.component';
 
 
 const appRoutes: Routes = [
@@ -52,6 +53,10 @@ const appRoutes: Routes = [
     path: 'publicationHtmlContent',
     component: HtmlContentComponent
   },
+  {
+    path: 'workflow',
+    component: WorkflowComponent
+  }
 
 ]
 
@@ -63,7 +68,8 @@ const appRoutes: Routes = [
     LoginComponent,
     PublicationUploadComponent,
     UserPublicationComponent,
-    HtmlContentComponent
+    HtmlContentComponent,
+    WorkflowComponent
   ],
   imports: [
     BrowserModule,

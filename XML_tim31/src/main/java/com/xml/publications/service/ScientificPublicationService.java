@@ -12,6 +12,6 @@ public interface ScientificPublicationService {
     String savePublicationFromFile(MultipartFile xmlFile) throws IOException;
     String savePublicationFromText(String xmlFile);
     List<ScientificPublication> getMyPublications(String username);
-    String changePublicationStatus(String publicationId, String status);
+    String changePublicationStatus(String publicationId, String status) throws Exception;
     String showPublication(String publicationId);
 }

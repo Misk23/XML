@@ -42,12 +42,23 @@ export class AppComponent implements OnInit{
       return false;
     }
   }
+  isEditor(){
+    const roles = this.authService.getRoles();
+    if(roles.includes('EDITOR_ROLE')){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   uploadPublication(){
     this.router.navigate(['/publication_upload']);
   }
   showPublications(){
     this.router.navigate(['/my_publications']);
+  }
+  showWorkflows(){
+    this.router.navigate(['/workflow'])
   }
 
 }

@@ -34,9 +34,10 @@ public class ScientificPublicationRepository {
         workflow.getAuthors().setAuthorUsername(scientificPublication.getMetadata().getAuthors().getAuthorUsername());
 
         workflow.setReviewers((new ObjectFactory()).createWorkflowReviewers());
-        workflow.setStatus("submitted");
-        databaseService.savePublication(scientificPublication);
+        workflow.setStatus(scientificPublication.getStatus());
         databaseService.saveWorkflow(workflow);
+        databaseService.savePublication(scientificPublication);
+
         //TODO RDF metoda u ovu liniju koda
     }
 
@@ -63,6 +64,7 @@ public class ScientificPublicationRepository {
     public String savePublicationFromText(String xmlFile){
 
         ScientificPublication scientificPublication = databaseService.getPublicationFromXMLString(xmlFile);
+
         if (scientificPublication == null)
             return "Publication class from xml string failure";
 
@@ -86,20 +88,18 @@ public class ScientificPublicationRepository {
     public String changeStatus(String id, String status){
         ScientificPublication scientificPublication;
         try{
-            System.out.println(id);
             scientificPublication = databaseService.getPublicationById(id);
         } catch (Exception e){
             e.printStackTrace();
             return "Publication with given id not found";
         }
-        System.out.println(status);
         scientificPublication.setStatus(status);
         if (!validator.validatePublicationAgainstSchema(scientificPublication)) {
             System.out.println("greska u validaciji");
             return "New publication not valid (schema validaton)";
         }
         try {
-            savePublication(scientificPublication);
+            databaseService.savePublication(scientificPublication);
         }catch (Exception e){
             e.printStackTrace();
             return "Saving publication unsuccessful";
