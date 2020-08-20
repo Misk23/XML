@@ -3,13 +3,19 @@ package com.xml.publications.controller;
 
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.service.ScientificPublicationService;
+import com.xml.publications.utils.Database.DatabaseService;
+import com.xml.publications.utils.Transformer.PDFTransformer;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.transform.dom.DOMSource;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.List;
@@ -20,6 +26,9 @@ public class ScientificPublicationController {
 
     @Autowired
     private ScientificPublicationService scientificPublicationService;
+
+    @Autowired
+    private DatabaseService databaseService;
 
 
     @RequestMapping(
@@ -75,6 +84,15 @@ public class ScientificPublicationController {
         }
 
         return new ResponseEntity<String>(sb.toString(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getScientificPublicationPDF/{id}",  produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<ByteArrayResource> getScientificPublicationPDF(@PathVariable String id) throws Exception {
+        ResponseEntity<String> generatePdf = showPublication(id);
+        DOMSource domSource = databaseService.getPublicationAsDom(id);
+        PDFTransformer pdfTransformer = new PDFTransformer();
+        InputStreamResource inputStreamResource = pdfTransformer.getPdf(domSource);
+        return new ResponseEntity<>(new ByteArrayResource(IOUtils.toByteArray(inputStreamResource.getInputStream())), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/withdraw/{id}", method = RequestMethod.GET)

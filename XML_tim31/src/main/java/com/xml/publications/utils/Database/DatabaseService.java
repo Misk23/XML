@@ -165,6 +165,28 @@ public class DatabaseService {
 
     }
 
+    public String getPublicationPdfById(String publicationId) throws Exception{
+        Connection connection = new Connection();
+        XMLResource xmlResource;
+
+        try{
+            xmlResource = connection.getResourceById(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, publicationId, AuthenticationUtilities.loadProperties());
+        }catch (NullPointerException ne){
+            ne.printStackTrace();
+            return null;
+        }
+
+        Marshaller marshaller = getMarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH, SCIENTIFIC_PUBLICATION_SCHEMA_PATH);
+        Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
+
+        ScientificPublication sc =  (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlResource.getContentAsDOM()));
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        marshaller.marshal(sc, stream);
+
+        return stream.toByteArray().toString();
+    }
+
+
     public void saveWorkflow(Workflow workflow) throws Exception {
         Connection connection = new Connection();
         Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());

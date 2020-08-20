@@ -1,6 +1,7 @@
 package com.xml.publications.utils.Transformer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,6 +20,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
+import org.springframework.core.io.InputStreamResource;
 
 
 /**
@@ -94,6 +96,41 @@ public class PDFTransformer {
 		}
 
 		return document;
+	}
+
+
+	public InputStreamResource getPdf(DOMSource domSource) {
+		StringWriter stringWriter = new StringWriter();
+
+		StreamResult result = new StreamResult(stringWriter);
+		StreamSource transformSource = new StreamSource(new File("src/main/resources/data/ScientificPublication.xsl"));
+
+		try {
+			Transformer transformer = transformerFactory.newTransformer(transformSource);
+
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+			transformer.transform(domSource, result);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		Document document = new Document();
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		PdfWriter writer;
+
+		try {
+			writer = PdfWriter.getInstance(document, outputStream);
+			document.open();
+			XMLWorkerHelper.getInstance().parseXHtml(writer, document, new ByteArrayInputStream(stringWriter.toString().getBytes(StandardCharsets.UTF_8)));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		document.close();
+
+		return new InputStreamResource(new ByteArrayInputStream(outputStream.toByteArray()));
 	}
 
 	public void generateScientificPublicationHTML(DOMSource source, String xslPath) throws FileNotFoundException {

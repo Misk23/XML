@@ -50,4 +50,14 @@ export class UserPublicationComponent implements OnInit {
     );
   }
 
+  public getPdf(publication: string){
+
+    this.scientificPublicationService.getPdf(publication).subscribe((pdf: Blob) => {
+      const downloadURL = URL.createObjectURL(pdf);
+      const a = document.createElement('a');
+      a.href = downloadURL;
+      a.download = publication + '.pdf';
+      a.click();
+    });
+  }
 }

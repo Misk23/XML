@@ -34,4 +34,8 @@ export class ScientificPublicationService {
     return this.http.get(this.basePath + '/showPublication/' + publication, {responseType: 'text'});
   }
 
+  getPdf(publication: string){
+    return this.http.get(this.basePath + '/getScientificPublicationPDF/' + publication, {responseType: 'blob'});
+  }
+
 }
