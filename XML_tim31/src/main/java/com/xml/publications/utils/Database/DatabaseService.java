@@ -3,8 +3,8 @@ package com.xml.publications.utils.Database;
 import com.xml.publications.model.CoverLetter.CoverLetter;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.User.User;
+import com.xml.publications.model.Workflow.Workflow;
 import com.xml.publications.utils.Authentication.AuthenticationUtilities;
-import com.xml.publications.utils.Transformer.PDFTransformer;
 import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
@@ -37,6 +37,9 @@ public class DatabaseService {
     public static final String COVER_LETTER_COLLECTION_PATH = "/db/publications/coverLetters";
     public static final String COVER_LETTER_SCHEMA_PATH="data/XSD/CoverLetter.xsd";
 
+    public static final String WORKFLOW_MODEL_PATH = "com.xml.publications.model.Workflow";
+    public static final String WORKFLOW_COLLECTION_PATH = "/db/publications/workflow";
+    public static final String WORKFLOW_SCHEMA_PATH="data/XSD/Workflow.xsd";
 
     public User getUserById(String userId) throws Exception{
 
@@ -139,6 +142,46 @@ public class DatabaseService {
                 }
             }
         }
+
+    }
+
+    public void saveWorkflow(Workflow workflow) throws Exception {
+        Connection connection = new Connection();
+        Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+
+        XMLResource xmlResource = null;
+        Collection collection = null;
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+
+        try{
+            collection = connection.getOrCreateCollection(WORKFLOW_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            xmlResource = (XMLResource) collection.createResource(workflow.getPublicationId(), XMLResource.RESOURCE_TYPE);
+
+            Marshaller marshaller = getMarshaller(WORKFLOW_MODEL_PATH, WORKFLOW_SCHEMA_PATH);
+            marshaller.marshal(workflow, outputStream);
+
+            xmlResource.setContent(outputStream);
+            collection.storeResource(xmlResource);
+        }finally {
+            if (xmlResource != null){
+                try{
+                    ((EXistResource) xmlResource).freeResources();
+                }catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+            if (collection != null){
+                try {
+                    collection.close();
+                } catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+        }
+
 
     }
 

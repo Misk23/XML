@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/XML/Workflow"
+    xmlns:wf="http://www.ftn.uns.ac.rs/XML/Workflow">
+
+    <xs:element name="workflow">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="authors">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="authorUsername" type="xs:string"
+                            />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="reviewers">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="reviewerUsername"
+                                type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="status">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="reviewing"/>
+                            <xs:enumeration value="revising"/>
+                            <xs:enumeration value="withdrawn"/>
+                            <xs:enumeration value="rejected"/>
+                            <xs:enumeration value="accepted"/>
+                            <xs:enumeration value="submitted"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="publicationId" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

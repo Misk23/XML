@@ -1,14 +1,14 @@
 package com.xml.publications.repository;
 
 
-import com.sun.xml.internal.ws.streaming.XMLReaderException;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
+import com.xml.publications.model.Workflow.ObjectFactory;
+import com.xml.publications.model.Workflow.Workflow;
 import com.xml.publications.utils.Database.DatabaseService;
 import com.xml.publications.utils.Database.Validator;
 import com.xml.publications.utils.Transformer.PDFTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.xmldb.api.modules.XMLResource;
 
 import javax.xml.transform.dom.DOMSource;
 import java.io.File;
@@ -28,7 +28,15 @@ public class ScientificPublicationRepository {
     }
 
     public void savePublication(ScientificPublication scientificPublication) throws Exception {
+        Workflow workflow = (new ObjectFactory()).createWorkflow();
+        workflow.setPublicationId(scientificPublication.getPublicationId());
+        workflow.setAuthors((new ObjectFactory()).createWorkflowAuthors());
+        workflow.getAuthors().setAuthorUsername(scientificPublication.getMetadata().getAuthors().getAuthorUsername());
+
+        workflow.setReviewers((new ObjectFactory()).createWorkflowReviewers());
+        workflow.setStatus("submitted");
         databaseService.savePublication(scientificPublication);
+        databaseService.saveWorkflow(workflow);
         //TODO RDF metoda u ovu liniju koda
     }
 

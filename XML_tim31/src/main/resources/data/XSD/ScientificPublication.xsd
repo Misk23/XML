@@ -10,17 +10,11 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="title" type="xs:string"/>
-                            <xs:element maxOccurs="unbounded" name="authors">
+                            <xs:element maxOccurs="1" name="authors">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="authorUsername" type="xs:string"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element maxOccurs="unbounded" minOccurs="0" name="reviewers">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="reviewerUsername" type="xs:string"/>
+                                        <xs:element name="authorUsername" type="xs:string"
+                                            maxOccurs="unbounded"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -69,7 +63,7 @@
             <xs:attribute name="publicationId" type="xs:string"/>
             <xs:attribute name="submissionDate" type="xs:date"/>
             <xs:attribute name="language" type="xs:string"/>
-            <xs:attribute default="reviewing" name="status">
+            <xs:attribute default="submitted" name="status">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="reviewing"/>
@@ -77,6 +71,7 @@
                         <xs:enumeration value="withdrawn"/>
                         <xs:enumeration value="rejected"/>
                         <xs:enumeration value="accepted"/>
+                        <xs:enumeration value="submitted"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>

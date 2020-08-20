@@ -33,9 +33,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setRole(userDTO.getRole());
 
-        user.setOwnPublications((new ObjectFactory()).createTPublications());
-        user.setReviewPublications((new ObjectFactory()).createTPublications());
-
         return userRepository.saveUser(user);
     }
 
@@ -43,4 +40,7 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findByUsername(username);
     }
+
+
+
 }

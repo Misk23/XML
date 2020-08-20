@@ -26,14 +26,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="ownPublications" type="usr:TPublications"/>
-                <xs:element name="reviewPublications" type="usr:TPublications"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="TPublications">
-        <xs:sequence maxOccurs="1" minOccurs="1">
-            <xs:element name="publicationID" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>
