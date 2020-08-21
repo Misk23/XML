@@ -28,4 +28,28 @@ export class AcceptedPublicationsComponent implements OnInit {
     }
   }
 
+  
+  onShowPublication(publication: string){
+
+    this.scientificPublicationService.showPublication(publication).subscribe( publicationHtmlContent =>{
+        localStorage.setItem('publicationHtmlContent', publicationHtmlContent);
+
+        window.open('publicationHtmlContent','_blank');
+    }
+    );
+  }
+
+
+   getPdf(publication: string){
+
+    this.scientificPublicationService.getPdf(publication).subscribe((pdf: Blob) => {
+      const downloadURL = URL.createObjectURL(pdf);
+      const a = document.createElement('a');
+      a.href = downloadURL;
+      a.download = publication + '.pdf';
+      a.click();
+    });
+  }
+
+
 }

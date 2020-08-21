@@ -19,7 +19,9 @@
                     <td>{{ publication.metadata.title}}</td>
                     <td>{{ publication.status}}</td>
                     <td>{{ publication.publicationId }}</td>
-                    <td><button type="button" class="btn btn-primary"  id="show"  ><i class="far fa-eye">Show Publication</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="show"  (click)="onShowPublication(publication.publicationId)"><i class="far fa-eye">Show Publication</i></button></td>
+                    <td><button type="button" class="btn btn-primary" id="downloadPdf" (click)="getPdf(publication.publicationId)"><i>Download pdf</i></button></td>
+
                 </tr>
             </tbody>
         </table>
