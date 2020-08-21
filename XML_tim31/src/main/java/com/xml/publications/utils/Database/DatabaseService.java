@@ -352,6 +352,94 @@ public class DatabaseService {
         return scientificPublications;
     }
 
+    public List<ScientificPublication> getAllAcceptedPublications(){
+        ArrayList<ScientificPublication> scientificPublications = new ArrayList<ScientificPublication>();
+        try {
+            Connection connection = new Connection();
+            Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+            DatabaseManager.registerDatabase(database);
+
+            Collection col = connection.getOrCreateCollection(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/ScientificPublication");
+            ResourceSet result = xpathService.query("//scientificPublication[@status='accepted']");
+
+            ResourceIterator it = result.getIterator();
+            Resource res = null;
+
+            while (it.hasMoreResources()) {
+                try {
+                    res = it.nextResource();
+                    Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
+                    StringReader reader = new StringReader(res.getContent().toString());
+                    ScientificPublication scientificPublication = (ScientificPublication) unmarshaller.unmarshal(reader);
+                    scientificPublications.add(scientificPublication);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return scientificPublications;
+
+    }
+
+    public List<User> getAllReviewers(){
+        ArrayList<User> reviewers = new ArrayList<User>();
+        try {
+            Connection connection = new Connection();
+            Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+            DatabaseManager.registerDatabase(database);
+
+            Collection col = connection.getOrCreateCollection(USER_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/User");
+            ResourceSet result = xpathService.query("//user[role=\"EDITOR_ROLE\" or role=\"REVIEWER_ROLE\"]");
+
+            ResourceIterator it = result.getIterator();
+            Resource res = null;
+
+            while (it.hasMoreResources()) {
+                try {
+                    res = it.nextResource();
+                    Unmarshaller unmarshaller = getUnmarshaller(USER_MODEL_PATH);
+                    StringReader reader = new StringReader(res.getContent().toString());
+                    User user = (User) unmarshaller.unmarshal(reader);
+                    reviewers.add(user);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return reviewers;
+
+    }
+
     public List<ScientificPublication> getPublicationsByUsername(String username) {
         ArrayList<ScientificPublication> scientificPublications = new ArrayList<ScientificPublication>();
         try {
@@ -393,6 +481,49 @@ public class DatabaseService {
         }
 
         return scientificPublications;
+    }
+
+    public List<Workflow> getWorkflowsByReviewer(String username) {
+        ArrayList<Workflow> workflows = new ArrayList<Workflow>();
+        try {
+            Connection connection = new Connection();
+            Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+            DatabaseManager.registerDatabase(database);
+
+            Collection col = connection.getOrCreateCollection(WORKFLOW_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/Workflow");
+            ResourceSet result = xpathService.query("//workflow[./reviewers[reviewerUsername='" + username + "']]");
+
+            ResourceIterator it = result.getIterator();
+            Resource res = null;
+
+            while (it.hasMoreResources()) {
+                try {
+                    res = it.nextResource();
+                    Unmarshaller unmarshaller = getUnmarshaller(WORKFLOW_MODEL_PATH);
+                    StringReader reader = new StringReader(res.getContent().toString());
+                    Workflow workflow = (Workflow) unmarshaller.unmarshal(reader);
+                    workflows.add(workflow);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return workflows;
     }
 
     public List<Workflow> getAllWorkflows(){
@@ -454,6 +585,27 @@ public class DatabaseService {
 
         try{
             return (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlResource.getContentAsDOM()));
+        }catch (NullPointerException ne){
+            return null;
+        }
+    }
+
+    public Workflow getWorkflowById(String workflowId) throws Exception{
+
+        Connection connection = new Connection();
+        XMLResource xmlResource;
+
+        try{
+            xmlResource = connection.getResourceById(WORKFLOW_COLLECTION_PATH, workflowId, AuthenticationUtilities.loadProperties());
+        }catch (NullPointerException ne){
+            ne.printStackTrace();
+            return null;
+        }
+
+        Unmarshaller unmarshaller = getUnmarshaller(WORKFLOW_MODEL_PATH);
+
+        try{
+            return (Workflow) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlResource.getContentAsDOM()));
         }catch (NullPointerException ne){
             return null;
         }

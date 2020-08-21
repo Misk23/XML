@@ -20,4 +20,8 @@ export class UserService {
            {headers, responseType : 'text' as 'json'} );
   }
 
+  getAllReviewers(){
+    return this.http.get(this.basePath + '/all_reviewers', {responseType: 'json'});
+  }
+
 }

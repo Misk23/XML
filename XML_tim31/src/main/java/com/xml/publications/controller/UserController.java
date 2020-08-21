@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -70,5 +71,9 @@ public class UserController {
             //ex.printStackTrace();
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+    }
+    @RequestMapping(value = "/all_reviewers", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getAllReviewers(){
+        return new ResponseEntity<List<String>>(userService.getAllReviewers(), HttpStatus.OK);
     }
 }

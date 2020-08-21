@@ -50,6 +50,14 @@ export class AppComponent implements OnInit{
       return false;
     }
   }
+  isReviewer(){
+    const roles = this.authService.getRoles();
+    if(roles.includes('REVIEWER_ROLE')){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   uploadPublication(){
     this.router.navigate(['/publication_upload']);
@@ -59,6 +67,12 @@ export class AppComponent implements OnInit{
   }
   showWorkflows(){
     this.router.navigate(['/workflow'])
+  }
+  acceptedPublications(){
+    this.router.navigate(['/accepted_publications'])
+  }
+  showPublicationsToReview(){
+    this.router.navigate(['/review_publications'])
   }
 
 }

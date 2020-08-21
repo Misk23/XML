@@ -26,7 +26,6 @@ export class ScientificPublicationService {
   }
 
   withdrawPublication(publication: string){
-    console.log(publication);
     return this.http.get(this.basePath + '/withdraw/' + publication, {responseType: 'text'});
   }
 
@@ -36,6 +35,10 @@ export class ScientificPublicationService {
 
   getPdf(publication: string){
     return this.http.get(this.basePath + '/getScientificPublicationPDF/' + publication, {responseType: 'blob'});
+  }
+
+  getAllAcceptedPublicatons(){
+    return this.http.get(this.basePath + '/all_accepted', {responseType: 'json'});
   }
 
 }

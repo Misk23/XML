@@ -6,6 +6,9 @@ import com.xml.publications.utils.Database.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class UserRepository {
 
@@ -39,5 +42,18 @@ public class UserRepository {
             System.out.println("Finding user EXCEPTION");
             return null;
         }
+    }
+
+    public List<String> getAllReviewers(){
+
+        List<User> reviewers = databaseService.getAllReviewers();
+        ArrayList<String> reviewerUsername = new ArrayList<String>();
+
+        for(User user: reviewers){
+            reviewerUsername.add(user.getUsername());
+        }
+
+        return reviewerUsername;
+
     }
 }

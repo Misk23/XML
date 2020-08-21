@@ -66,4 +66,8 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
         return scientificPublicationRepository.changeStatus(publicationId, status);
     }
 
+    public List<ScientificPublication> getAllAcceptedPublications(){
+        return scientificPublicationRepository.getAllAcceptedPublications();
+    }
+
 }

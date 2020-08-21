@@ -100,5 +100,10 @@ public class ScientificPublicationController {
         return new ResponseEntity<String>(scientificPublicationService.changePublicationStatus(id, "withdrawn"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/all_accepted", method = RequestMethod.GET)
+    public ResponseEntity<List<ScientificPublication>> allAcceptedPublications() throws Exception {
+        return new ResponseEntity<List<ScientificPublication>>(scientificPublicationService.getAllAcceptedPublications(), HttpStatus.OK);
+    }
+
 
 }

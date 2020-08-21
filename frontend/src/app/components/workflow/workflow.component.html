@@ -21,11 +21,14 @@
                     <td>{{ workflow.status}}</td>
                     <td>{{ workflow.authors.authorUsername}}</td>
                     <td>{{ workflow.reviewers.reviewerUsername}}</td>
-                    <td><button type="button" class="btn btn-primary"  id="accept"  ><i class="far fa-eye">Accept</i></button></td>
-                    <td><button type="button" class="btn btn-primary"  id="reject"  ><i class="far fa-eye">Reject</i></button></td>
-                    <td><button type="button" class="btn btn-primary"  id="add_reviewer"  ><i class="far fa-eye">Add Reviewer</i></button></td>
-                </tr>
-            </tbody>
+                    <td *ngIf ="!processed(workflow)"><button type="button" class="btn btn-primary"  id="accept" (click)="onAccept(workflow.publicationId)"><i class="far fa-eye">Accept</i></button></td>
+                    <td *ngIf ="!processed(workflow)"><button type="button" class="btn btn-primary"  id="reject" (click)="onReject(workflow.publicationId)"><i class="far fa-eye">Reject</i></button></td>
+                    <td>  </td>
+                    <select #mySelect *ngIf ="!processed(workflow)" (change)='onOptionsSelected(mySelect.value)'>
+                        <option *ngFor='let r of reviewers' >{{r}}</option>
+                    </select>
+                    <td *ngIf ="!processed(workflow)"><button type="button" class="btn btn-primary"  id="add_reviewer" (click)="onAddReviewer(workflow.publicationId)" ><i class="far fa-eye">Add Reviewer</i></button></td>
+        </tbody>
         </table>
     </div>
 

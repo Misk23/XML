@@ -14,4 +14,6 @@ public interface ScientificPublicationService {
     List<ScientificPublication> getMyPublications(String username);
     String changePublicationStatus(String publicationId, String status) throws Exception;
     String showPublication(String publicationId);
+    List<ScientificPublication> getAllAcceptedPublications();
+
 }

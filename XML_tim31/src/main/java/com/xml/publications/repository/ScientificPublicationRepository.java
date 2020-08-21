@@ -128,6 +128,10 @@ public class ScientificPublicationRepository {
         return "Something is wrong!";
     }
 
+    public List<ScientificPublication> getAllAcceptedPublications(){
+        return databaseService.getAllAcceptedPublications();
+    }
+
 
 
 

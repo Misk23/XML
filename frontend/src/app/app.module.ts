@@ -25,6 +25,8 @@ import { PublicationUploadComponent } from './components/publication-upload/publ
 import { UserPublicationComponent } from './components/user-publication/user-publication.component';
 import { HtmlContentComponent } from './components/user-publication/htmlContent';
 import { WorkflowComponent } from './components/workflow/workflow.component';
+import { AcceptedPublicationsComponent } from './components/accepted-publications/accepted-publications.component';
+import { ReviewPublicationsComponent } from './components/review-publications/review-publications.component';
 
 
 const appRoutes: Routes = [
@@ -56,6 +58,14 @@ const appRoutes: Routes = [
   {
     path: 'workflow',
     component: WorkflowComponent
+  },
+  {
+    path: 'accepted_publications',
+    component: AcceptedPublicationsComponent
+  },
+  {
+    path: 'review_publications',
+    component: ReviewPublicationsComponent
   }
 
 ]
@@ -69,7 +79,9 @@ const appRoutes: Routes = [
     PublicationUploadComponent,
     UserPublicationComponent,
     HtmlContentComponent,
-    WorkflowComponent
+    WorkflowComponent,
+    AcceptedPublicationsComponent,
+    ReviewPublicationsComponent
   ],
   imports: [
     BrowserModule,
