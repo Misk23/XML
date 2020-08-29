@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScientificPublicationService } from 'src/app/services/scientific-publication.service';
 import { AuthenticationService } from 'src/app/services/security/authentication-service.service';
+import { EditPublicationComponent } from '../edit-publication/edit-publication.component';
 
 @Component({
   selector: 'app-user-publication',
@@ -45,7 +46,7 @@ export class UserPublicationComponent implements OnInit {
     this.scientificPublicationService.showPublication(publication).subscribe( publicationHtmlContent =>{
         localStorage.setItem('publicationHtmlContent', publicationHtmlContent);
 
-        window.open('publicationHtmlContent','_blank');
+        window.open('publicationHtmlContent', '_blank');
     }
     );
   }
@@ -59,5 +60,10 @@ export class UserPublicationComponent implements OnInit {
       a.download = publication + '.pdf';
       a.click();
     });
+  }
+
+  public onEdit(id: string){
+    localStorage.setItem('publicationIdForEdit', id);
+    window.open('editPublication', '_blank');
   }
 }

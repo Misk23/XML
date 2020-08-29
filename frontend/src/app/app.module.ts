@@ -29,6 +29,8 @@ import { WorkflowComponent } from './components/workflow/workflow.component';
 import { AcceptedPublicationsComponent } from './components/accepted-publications/accepted-publications.component';
 import { ReviewPublicationsComponent } from './components/review-publications/review-publications.component';
 import { ReviewFormComponent } from './components/review-form/review-form.component';
+import { EditPublicationComponent } from './components/edit-publication/edit-publication.component';
+import { ScientificPublicationService } from './services/scientific-publication.service';
 
 
 const appRoutes: Routes = [
@@ -68,6 +70,10 @@ const appRoutes: Routes = [
   {
     path: 'review_publications',
     component: ReviewPublicationsComponent
+  },
+  {
+    path: 'editPublication',
+    component: EditPublicationComponent
   }
 
 ]
@@ -108,7 +114,7 @@ const appRoutes: Routes = [
       multi: true
     },
     AuthenticationService,
-    UserService
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

@@ -40,6 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		protected void configure(HttpSecurity httpSecurity) throws Exception {
 			httpSecurity.csrf().disable()
 			.authorizeRequests()
+
+
+					.antMatchers("/scientificPublication/editPublication").permitAll()
+					.antMatchers("/scientificPublication/getPublicationForEdit/{id}").permitAll()
 			.antMatchers("/review/save").permitAll()
 			.antMatchers("/workflow/get_to_review/{username}").permitAll()
 			.antMatchers("/workflow/add_reviewer").permitAll()

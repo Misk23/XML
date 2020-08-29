@@ -19,6 +19,8 @@
                     <td>{{ publication.status}}</td>
                     <td><button type="button" class="btn btn-primary"  id="show" (click) = "onShowPublication(publication.publicationId)" ><i class="far fa-eye">Show Publication</i></button></td>
                     <td><button type="button" class="btn btn-primary"  id="withdraw" (click) = "onWithdraw(publication.publicationId)" ><i class="far fa-eye">Withdraw Publication</i></button></td>
+                    <td><button type="button" class="btn btn-primary"  id="editing" (click) = "onEdit(publication.publicationId)" ><i class="far fa-eye">Edit Publication</i></button></td>
+
                     <td><button type="button" class="btn btn-primary"  id="download" (click) = "getPdf(publication.publicationId)" ><i class="far fa-eye">Download pdf</i></button></td>
                 </tr>
             </tbody>

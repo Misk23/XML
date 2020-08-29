@@ -1,0 +1,31 @@
+<div id="scientificPublication">
+    <button type="button" class="btn btn-primary" (click)="editPublication()">Save changes</button>
+
+    <h1 id="title" contenteditable="true"></h1>
+    
+    <h6 >Keywords: </h6>
+    <ul id="keywords"></ul>
+
+    <div id="chapters">
+
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+
+
+    <button type="button" class="btn btn-primary" id="addButton" (click)="addNewCitation()">Add citation</button>
+    <h4>Citations: </h4>
+    <table id="references" class="table table-bordered table-hover">
+        <thead>
+            <th>citation id</th>
+            <th>author names</th>
+            <th>publication title</th>
+            <th>year</th>
+            <th>url</th>
+            <th></th>
+        </thead>
+    </table>
+
+</div>

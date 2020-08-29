@@ -1,6 +1,9 @@
 package com.xml.publications.controller;
 
 
+import com.xml.publications.DTO.MessageDTO;
+import com.xml.publications.DTO.MessageEditPublicationDTO;
+import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.service.ScientificPublicationService;
 import com.xml.publications.utils.Database.DatabaseService;
@@ -103,6 +106,40 @@ public class ScientificPublicationController {
     @RequestMapping(value = "/all_accepted", method = RequestMethod.GET)
     public ResponseEntity<List<ScientificPublication>> allAcceptedPublications() throws Exception {
         return new ResponseEntity<List<ScientificPublication>>(scientificPublicationService.getAllAcceptedPublications(), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/getPublicationForEdit/{id}", method = RequestMethod.GET)
+    public ResponseEntity<MessageEditPublicationDTO> getPublicationForEdit(@PathVariable String id) throws Exception {
+        MessageEditPublicationDTO messageEditPublicationDTO = new MessageEditPublicationDTO();
+        MessageDTO messageDTO = new MessageDTO();
+
+        ScientificPublication scientificPublication = databaseService.getPublicationById(id);
+        messageEditPublicationDTO.setScientificPublication(scientificPublication);
+
+
+        if(scientificPublication.getStatus().equalsIgnoreCase("withdrawn") ||
+                scientificPublication.getStatus().equalsIgnoreCase("rejected")
+        ){
+            messageDTO.setSuccess(false);
+            messageDTO.setMessage("You cannot edit scientific publication!");
+        }else{
+            messageDTO.setSuccess(true);
+            messageDTO.setMessage("Ok :)");
+        }
+
+        messageEditPublicationDTO.setMessageDTO(messageDTO);
+
+
+        return new ResponseEntity<MessageEditPublicationDTO>(messageEditPublicationDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/editPublication", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MessageDTO> editPublication(@RequestBody ScientificPublicationEditDTO sp) throws Exception {
+        System.out.println(sp);
+        MessageDTO messageDTO = scientificPublicationService.editPublication(sp);
+
+        return new ResponseEntity<MessageDTO>(messageDTO, HttpStatus.OK);
     }
 
 

@@ -1,5 +1,7 @@
 package com.xml.publications.repository;
 
+import com.xml.publications.DTO.MessageDTO;
+import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.User.User;
 import com.xml.publications.utils.Database.DatabaseService;
 import com.xml.publications.utils.Database.Validator;
@@ -56,4 +58,5 @@ public class UserRepository {
         return reviewerUsername;
 
     }
+
 }

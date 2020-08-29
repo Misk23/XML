@@ -1,6 +1,8 @@
 package com.xml.publications.repository;
 
 
+import com.xml.publications.DTO.MessageDTO;
+import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.Workflow.ObjectFactory;
 import com.xml.publications.model.Workflow.Workflow;
@@ -132,6 +134,10 @@ public class ScientificPublicationRepository {
         return databaseService.getAllAcceptedPublications();
     }
 
+
+    public MessageDTO editPublication(ScientificPublicationEditDTO sp) throws Exception{
+        return databaseService.editPublication(sp);
+    }
 
 
 

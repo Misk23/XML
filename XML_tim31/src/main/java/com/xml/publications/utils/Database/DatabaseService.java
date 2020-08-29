@@ -1,7 +1,9 @@
 package com.xml.publications.utils.Database;
 
+import com.xml.publications.DTO.*;
 import com.xml.publications.model.CoverLetter.CoverLetter;
 import com.xml.publications.model.Review.Review;
+import com.xml.publications.model.ScientificPublication.ObjectFactory;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.User.User;
 import com.xml.publications.model.Workflow.Workflow;
@@ -19,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,6 +235,87 @@ public class DatabaseService {
 
         return stream.toByteArray().toString();
     }
+
+    public MessageDTO editPublication(ScientificPublicationEditDTO sp) throws Exception {
+        System.out.println("edit publication");
+        Connection connection = new Connection();
+        Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+        XMLResource xmlResource = null;
+        Collection collection = null;
+
+        try{
+            collection = connection.getOrCreateCollection(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+            xmlResource = connection.getResourceById(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, sp.getId(), AuthenticationUtilities.loadProperties());
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        Marshaller marshaller = getMarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH, SCIENTIFIC_PUBLICATION_SCHEMA_PATH);
+        Unmarshaller unmarshaller = getUnmarshaller(SCIENTIFIC_PUBLICATION_MODEL_PATH);
+        ScientificPublication sc =  (ScientificPublication) JAXBIntrospector.getValue(unmarshaller.unmarshal(xmlResource.getContentAsDOM()));
+
+
+        sc.getMetadata().setTitle(sp.getTitle());
+
+        sc.getMetadata().getKeywords().clear();
+        sp.getKeywords().stream().forEach(s -> sc.getMetadata().getKeywords().add(s));
+
+        sc.getChapter().clear();
+
+
+        for(Chapter chapter: sp.getChapters()){
+
+            ScientificPublication.Chapter cha = (new ObjectFactory().createScientificPublicationChapter());
+            cha.setTitle(chapter.getTitle());
+
+            for(Paragraph p: chapter.getParagraphs()) {
+                ScientificPublication.Chapter.Paragraph newParagraph = (new ObjectFactory().createScientificPublicationChapterParagraph());
+                newParagraph.setText(p.getText());
+
+                if (p.getCitation() != null){
+                    ScientificPublication.Chapter.Paragraph.Citation newCitation = (new ObjectFactory().createScientificPublicationChapterParagraphCitation());
+                    //System.out.println("ovde " + p.getCitation().getId());
+                    newCitation.setId(BigInteger.valueOf(Long.parseLong(p.getCitation().getId())));
+                    newParagraph.setCitation(newCitation);
+                }
+                cha.getParagraph().add(newParagraph);
+
+            }
+            sc.getChapter().add(cha);
+        }
+
+
+        sc.getReference().clear();
+
+        for (Citation referenceCitation: sp.getReferences()){
+            ScientificPublication.Reference reference = (new ObjectFactory().createScientificPublicationReference());
+
+            reference.setCitationId(BigInteger.valueOf(Long.parseLong(referenceCitation.getId())));
+            reference.setPublicationTitle(referenceCitation.getPublicationTitle());
+            reference.setUrl(referenceCitation.getUrl());
+            reference.setYear(BigInteger.valueOf(referenceCitation.getYear()));
+
+            reference.getAuthorNames().clear();
+
+            for(String authorNames: referenceCitation.getAuthorNames()){
+                reference.getAuthorNames().add(authorNames);
+            }
+            sc.getReference().add(reference);
+        }
+
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        marshaller.marshal(sc, stream);
+
+        xmlResource.setContent(stream);
+        collection.storeResource(xmlResource);
+
+        return new MessageDTO("Publication was changed successfully :)", true);
+    }
+
+
 
 
     public void saveWorkflow(Workflow workflow) throws Exception {
