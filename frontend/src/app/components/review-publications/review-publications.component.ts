@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { WorkflowService } from 'src/app/services/workflow.service';
 import { AuthenticationService } from 'src/app/services/security/authentication-service.service';
 import { ScientificPublicationService } from 'src/app/services/scientific-publication.service';
+import { TransferService } from 'src/app/services/transfer.service';
 
 @Component({
   selector: 'app-review-publications',
@@ -12,9 +13,11 @@ import { ScientificPublicationService } from 'src/app/services/scientific-public
 export class ReviewPublicationsComponent implements OnInit {
 
   public publications = [];
+  public publicationChosen = false;
 
   constructor(private router: Router, private workflowService: WorkflowService,
-    private authService: AuthenticationService, private scientificPublicationService:ScientificPublicationService) { }
+    private authService: AuthenticationService, private scientificPublicationService:ScientificPublicationService,
+    private transferService: TransferService) { }
 
   ngOnInit(): void {
     this.workflowService.getPublicationsToReview(this.authService.getCurrentUser().username)
@@ -50,6 +53,12 @@ export class ReviewPublicationsComponent implements OnInit {
       a.download = publication + '.pdf';
       a.click();
     });
+  }
+
+  openForm(publication){
+    this.publicationChosen = true;
+    console.log(publication.publicationId);
+    this.transferService.changePublication(publication);
   }
 
 }

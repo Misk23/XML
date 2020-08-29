@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import {RouterModule, Routes} from '@angular/router';
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
@@ -27,6 +28,7 @@ import { HtmlContentComponent } from './components/user-publication/htmlContent'
 import { WorkflowComponent } from './components/workflow/workflow.component';
 import { AcceptedPublicationsComponent } from './components/accepted-publications/accepted-publications.component';
 import { ReviewPublicationsComponent } from './components/review-publications/review-publications.component';
+import { ReviewFormComponent } from './components/review-form/review-form.component';
 
 
 const appRoutes: Routes = [
@@ -81,7 +83,8 @@ const appRoutes: Routes = [
     HtmlContentComponent,
     WorkflowComponent,
     AcceptedPublicationsComponent,
-    ReviewPublicationsComponent
+    ReviewPublicationsComponent,
+    ReviewFormComponent
   ],
   imports: [
     BrowserModule,

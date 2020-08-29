@@ -1,0 +1,68 @@
+<div class="col-md-3"></div>
+    <div class="col-sm-10">
+        <h2 class="form-signin-heading">Review {{review.publicationId}}</h2>
+
+        <h4>Reviewer: {{review.reviewedBy}}   Submission date: {{review.submissionDate}}</h4>
+
+        <div class="form-group">
+            <label class="col-md-6 control-label">Relevance Of Research Problem:</label>
+            <select id= "relevanceOfResearchProblem" name="relevanceOfResearchProblem" [(ngModel)]="review.relevanceOfResearchProblem" style="display: inline-block" class="ml-1 mb-4">
+              <option *ngFor="let key of criteriaGradeOptions" [value]="key" [label]="criteriaGrade[key]"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-6 control-label">Conceptual Quality:</label>
+            <select id= "conceptualQuality" name="conceptualQuality" [(ngModel)]="review.conceptualQuality" style="display: inline-block" class="ml-1 mb-4">
+              <option *ngFor="let key of criteriaGradeOptions" [value]="key" [label]="criteriaGrade[key]"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-6 control-label">Methodological Quality:</label>
+            <select id= "methodologicalQuality" name="methodologicalQuality" [(ngModel)]="review.methodologicalQuality" style="display: inline-block" class="ml-1 mb-4">
+              <option *ngFor="let key of criteriaGradeOptions" [value]="key" [label]="criteriaGrade[key]"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-6 control-label">Readability:</label>
+            <select id= "readability" name="readability" [(ngModel)]="review.readability" style="display: inline-block" class="ml-1 mb-4">
+              <option *ngFor="let key of criteriaGradeOptions" [value]="key" [label]="criteriaGrade[key]"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-6 control-label">Originality:</label>
+            <select id= "originality" name="originality" [(ngModel)]="review.originality" style="display: inline-block" class="ml-1 mb-4">
+              <option *ngFor="let key of criteriaGradeOptions" [value]="key" [label]="criteriaGrade[key]"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-6 control-label">Overall Evaluation:</label>
+          <select id= "overallEvaluation" name="overallEvaluation" [(ngModel)]="review.overallEvaluation" style="display: inline-block" class="ml-1 mb-4">
+            <option value='reject' label='reject'></option>
+            <option value='acceptable with major revisions' label='acceptable with major revisions'></option>
+            <option value='acceptable with minor revisions' label="acceptable with minor revisions"></option>
+            <option value='acceptable without revisions' label='acceptable without revisions'></option>
+          </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Comment To Author:</label>
+        <textarea class="form-control" id="commentToAuthor" rows="4" placeholder="Comment To Author" [(ngModel)] = "review.commentToAuthor"></textarea>
+      </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Comment To Editor:</label>
+      <textarea class="form-control" id="commentsToEditor" rows="4" placeholder="Comment To Editor" [(ngModel)] = "review.commentsToEditor"></textarea>
+    </div>
+
+
+        <div class="col-lg">
+            <button class="btn btn-primary btn-block" id="submitReview" (click)="submitReview()">Submit Review</button>          
+        </div>
+
+
+    </div>

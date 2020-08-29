@@ -1,6 +1,7 @@
 package com.xml.publications.utils.Database;
 
 import com.xml.publications.model.CoverLetter.CoverLetter;
+import com.xml.publications.model.Review.Review;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.User.User;
 import com.xml.publications.model.Workflow.Workflow;
@@ -28,7 +29,6 @@ public class DatabaseService {
     public static final String USER_COLLECTION_PATH="/db/publications/user";
     public static final String USER_SCHEMA_PATH="data/XSD/User.xsd";
 
-
     public static final String SCIENTIFIC_PUBLICATION_MODEL_PATH ="com.xml.publications.model.ScientificPublication";
     public static final String SCIENTIFIC_PUBLICATION_COLLECTION_PATH="/db/publications/scientificPublications";
     public static final String SCIENTIFIC_PUBLICATION_SCHEMA_PATH="data/XSD/ScientificPublication.xsd";
@@ -40,6 +40,10 @@ public class DatabaseService {
     public static final String WORKFLOW_MODEL_PATH = "com.xml.publications.model.Workflow";
     public static final String WORKFLOW_COLLECTION_PATH = "/db/publications/workflow";
     public static final String WORKFLOW_SCHEMA_PATH="data/XSD/Workflow.xsd";
+
+    public static final String REVIEW_MODEL_PATH = "com.xml.publications.model.Review";
+    public static final String REVIEW_COLLECTION_PATH = "/db/publications/review";
+    public static final String REVIEW_SCHEMA_PATH="data/XSD/Review.xsd";
 
     public User getUserById(String userId) throws Exception{
 
@@ -124,6 +128,49 @@ public class DatabaseService {
         }
 
     }
+
+
+    public void saveReview(Review review) throws Exception{
+        Connection connection = new Connection();
+        Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+
+        XMLResource xmlResource = null;
+        Collection collection = null;
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+
+        try{
+            collection = connection.getOrCreateCollection(REVIEW_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            xmlResource = (XMLResource) collection.createResource(review.getPublicationId(), XMLResource.RESOURCE_TYPE);
+
+            Marshaller marshaller = getMarshaller(REVIEW_MODEL_PATH, REVIEW_SCHEMA_PATH);
+            marshaller.marshal(review, outputStream);
+
+            xmlResource.setContent(outputStream);
+            collection.storeResource(xmlResource);
+
+        }finally {
+            if (collection != null){
+                try{
+                    collection.close();
+                }catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+            if (xmlResource != null){
+                try{
+                    ((EXistResource) xmlResource).freeResources();
+                }catch ( XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+
+        }
+
+    }
+
 
     public void savePublication(ScientificPublication scientificPublication) throws Exception {
 

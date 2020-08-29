@@ -59,8 +59,6 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
 
     public  String changePublicationStatus(String publicationId, String status) throws Exception {
         Workflow workflow = workflowRepository.findByPublicationId(publicationId);
-        System.out.println("Evo me");
-        System.out.println(workflow.getStatus());
         workflow.setStatus(status);
         workflowRepository.save(workflow);
         return scientificPublicationRepository.changeStatus(publicationId, status);
