@@ -66,4 +66,14 @@ export class UserPublicationComponent implements OnInit {
     localStorage.setItem('publicationIdForEdit', id);
     window.open('editPublication', '_blank');
   }
+
+  public getPdfWithReviews(publication: string){
+    this.scientificPublicationService.getPublicationWithReviews(publication).subscribe((pdf: Blob) => {
+      const downloadURL = URL.createObjectURL(pdf);
+      const a = document.createElement('a');
+      a.href = downloadURL;
+      a.download = publication + 'withReviews.pdf';
+      a.click();
+    });
+  }
 }

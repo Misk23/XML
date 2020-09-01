@@ -523,6 +523,50 @@ public class DatabaseService {
         return scientificPublications;
     }
 
+
+    public List<Review> getReviesFromSpecificPublication(String publicationId) {
+        ArrayList<Review> reviews = new ArrayList<Review>();
+        try {
+            Connection connection = new Connection();
+            Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+            DatabaseManager.registerDatabase(database);
+
+            Collection col = connection.getOrCreateCollection(REVIEW_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/Review");
+            ResourceSet result = xpathService.query("//review[@publicationId='" + publicationId + "']");
+
+            ResourceIterator it = result.getIterator();
+            Resource res = null;
+
+            while (it.hasMoreResources()) {
+                try {
+                    res = it.nextResource();
+                    Unmarshaller unmarshaller = getUnmarshaller(REVIEW_MODEL_PATH);
+                    StringReader reader = new StringReader(((XMLResource) res).getContent().toString());
+                    Review review = (Review) unmarshaller.unmarshal(reader);
+                    reviews.add(review);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return reviews;
+    }
+
     public List<ScientificPublication> getAllAcceptedPublications(){
         ArrayList<ScientificPublication> scientificPublications = new ArrayList<ScientificPublication>();
         try {
@@ -833,6 +877,25 @@ public class DatabaseService {
 
         try{
             xmlResource = connection.getResourceById(SCIENTIFIC_PUBLICATION_COLLECTION_PATH, publicationId, AuthenticationUtilities.loadProperties());
+        }catch (NullPointerException ne){
+            ne.printStackTrace();
+            return null;
+        }
+
+        try{
+            DOMSource domSource = new DOMSource(xmlResource.getContentAsDOM());
+            return domSource;
+        }catch (NullPointerException ne){
+            return null;
+        }
+    }
+
+    public DOMSource getReviewAsDom(String reviewId) throws Exception{
+        Connection connection = new Connection();
+        XMLResource xmlResource = null;
+
+        try{
+            xmlResource = connection.getResourceById(REVIEW_COLLECTION_PATH, reviewId, AuthenticationUtilities.loadProperties());
         }catch (NullPointerException ne){
             ne.printStackTrace();
             return null;

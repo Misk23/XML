@@ -6,11 +6,13 @@ import com.xml.publications.model.Review.Review;
 import com.xml.publications.model.Review.TCriteriaGrade;
 import com.xml.publications.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -57,5 +59,9 @@ public class ReviewServiceImpl implements ReviewService {
 
         return reviewRepository.saveReview(review);
 
+    }
+
+    public ByteArrayResource getPublicationWithReviews(String publicationId) throws Exception {
+        return reviewRepository.getPublicationWithReviews(publicationId);
     }
 }

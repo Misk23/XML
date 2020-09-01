@@ -51,5 +51,8 @@ export class ScientificPublicationService {
     return this.http.post(this.basePath + '/editPublication', JSON.stringify(publicationEditDTO), {headers, responseType: 'json'});
   }
 
+  getPublicationWithReviews(publication: string){
+    return this.http.get('http://localhost:8081/review/getPublicationWithReviews/' + publication, {responseType: 'blob'});
+  }
 
 }

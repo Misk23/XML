@@ -77,6 +77,20 @@ public class PDFTransformer {
 
 	}
 
+	public void generateReviewPDF(String filePath) throws IOException, DocumentException {
+
+		Document document = new Document();
+
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+		document.open();
+
+		XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream("src/main/java/review.html"));
+
+		document.close();
+
+	}
+
 	public org.w3c.dom.Document buildDocument(String filePath) {
 
 		org.w3c.dom.Document document = null;
@@ -160,6 +174,33 @@ public class PDFTransformer {
 
 	}
 
+	public void generateReviewHTML(DOMSource source, String xslPath) throws FileNotFoundException {
+
+		try {
+
+			// Initialize Transformer instance
+			StreamSource transformSource = new StreamSource(new File(xslPath));
+			Transformer transformer = transformerFactory.newTransformer(transformSource);
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+			// Generate XHTML
+			transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+
+
+			StreamResult result = new StreamResult(new FileOutputStream("src/main/java/review.html"));
+			transformer.transform(source, result);
+
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 
 	public void generateHTML(String xmlPath, String xslPath) throws FileNotFoundException {
@@ -195,7 +236,7 @@ public class PDFTransformer {
 		System.out.println("[INFO] " + PDFTransformer.class.getSimpleName());
 
 		// Creates parent directory if necessary
-		File pdfFile = new File("src/main/java/scientificPublication.pdf");
+		File pdfFile = new File("src/main/java/review.pdf");
 
 		if (!pdfFile.getParentFile().exists()) {
 			System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
@@ -204,11 +245,13 @@ public class PDFTransformer {
 
 		PDFTransformer pdfTransformer = new PDFTransformer();
 
-		pdfTransformer.generateHTML("src/main/resources/data/publicationFile.xml", "src/main/resources/data/ScientificPublication.xsl");
-		pdfTransformer.generatePDF("src/main/java/scientificPublication.pdf");
+		pdfTransformer.generateHTML("src/main/resources/data/XSD/instance1.xml", "src/main/resources/data/review.xsl");
+		pdfTransformer.generatePDF("src/main/java/review.pdf");
 
-		System.out.println("[INFO] File \"" + "src/main/java/scientificPublication.pdf" + "\" generated successfully.");
+		System.out.println("[INFO] File \"" + "src/main/java/review.pdf" + "\" generated successfully.");
 		System.out.println("[INFO] End.");
+
 	}
+
 }
 

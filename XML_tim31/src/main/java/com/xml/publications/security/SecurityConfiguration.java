@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			httpSecurity.csrf().disable()
 			.authorizeRequests()
 
-
+					.antMatchers("/review/getPublicationWithReviews/{publicationId}").permitAll()
 					.antMatchers("/scientificPublication/editPublication").permitAll()
 					.antMatchers("/scientificPublication/getPublicationForEdit/{id}").permitAll()
 			.antMatchers("/review/save").permitAll()

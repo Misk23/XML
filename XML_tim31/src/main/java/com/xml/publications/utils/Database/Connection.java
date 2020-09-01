@@ -65,6 +65,7 @@ public class Connection {
         }
     }
 
+
     public  Collection getOrCreateCollection(String collectionPath, int offset,
                                                    AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
 
