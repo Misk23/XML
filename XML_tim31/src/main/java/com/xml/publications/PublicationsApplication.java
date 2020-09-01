@@ -10,7 +10,7 @@ public class PublicationsApplication {
 
         SpringApplication.run(PublicationsApplication.class, args);
 
-        System.out.println("Hello world!");
+        System.out.println(System.getenv("GMAIL_USERNAME"));
     }
 
 }

@@ -2,6 +2,7 @@ package com.xml.publications.utils.Database;
 
 
 import com.xml.publications.model.CoverLetter.CoverLetter;
+import com.xml.publications.model.Notification.Notification;
 import com.xml.publications.model.Review.Review;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.User.User;
@@ -30,6 +31,8 @@ public class Validator {
     public static final String REVIEW_MODEL_PATH = "com.xml.publications.model.Review";
     public static final String REVIEW_SCHEMA_PATH="src/main/resources/data/XSD/Review.xsd";
 
+    public static final String NOTIFICATION_MODEL_PATH = "com.xml.publications.model.Notification";
+    public static final String NOTIFICATION_SCHEMA_PATH="src/main/resources/data/XSD/Notification.xsd";
 
 
     public boolean validateUserAgainstSchema(User user) {
@@ -89,6 +92,20 @@ public class Validator {
             return false;
         }
 
+    }
+
+    public boolean validateNotificationAgainstSchema(Notification notification){
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(NOTIFICATION_MODEL_PATH);
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(new File(NOTIFICATION_SCHEMA_PATH));
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setSchema(schema);
+            marshaller.marshal(notification, new DefaultHandler());
+            return true;
+        } catch ( Exception e) {
+            return false;
+        }
     }
 
 

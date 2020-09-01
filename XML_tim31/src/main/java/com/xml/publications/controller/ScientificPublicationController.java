@@ -5,6 +5,7 @@ import com.xml.publications.DTO.MessageDTO;
 import com.xml.publications.DTO.MessageEditPublicationDTO;
 import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
+import com.xml.publications.service.NotificationService;
 import com.xml.publications.service.ScientificPublicationService;
 import com.xml.publications.utils.Database.DatabaseService;
 import com.xml.publications.utils.Transformer.PDFTransformer;
@@ -32,6 +33,9 @@ public class ScientificPublicationController {
 
     @Autowired
     private DatabaseService databaseService;
+
+    @Autowired
+    private NotificationService notificationService;
 
 
     @RequestMapping(
@@ -100,6 +104,7 @@ public class ScientificPublicationController {
 
     @RequestMapping(value = "/withdraw/{id}", method = RequestMethod.GET)
     public ResponseEntity<String> withdrawPublication(@PathVariable String id) throws Exception {
+        notificationService.notificationPublicationWithdrawn(id);
         return new ResponseEntity<String>(scientificPublicationService.changePublicationStatus(id, "withdrawn"), HttpStatus.OK);
     }
 

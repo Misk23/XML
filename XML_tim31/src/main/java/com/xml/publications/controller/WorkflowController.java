@@ -4,6 +4,7 @@ package com.xml.publications.controller;
 import com.xml.publications.DTO.ReviewRequestDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.Workflow.Workflow;
+import com.xml.publications.service.NotificationService;
 import com.xml.publications.service.ScientificPublicationService;
 import com.xml.publications.service.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class WorkflowController {
     @Autowired
     private ScientificPublicationService scientificPublicationService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Workflow>> getAllWorkflows(){
         return new ResponseEntity<List<Workflow>>(workflowService.getAll(), HttpStatus.OK);
@@ -30,16 +34,19 @@ public class WorkflowController {
 
     @RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
     public ResponseEntity<String> acceptPublication(@PathVariable String id) throws Exception {
+        notificationService.notificationPublicationAccepted(id);
         return new ResponseEntity<String>(scientificPublicationService.changePublicationStatus(id, "accepted"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/reject/{id}", method = RequestMethod.GET)
     public ResponseEntity<String> rejectPublication(@PathVariable String id) throws Exception {
+        notificationService.notificationPublicationRejected(id);
         return new ResponseEntity<String>(scientificPublicationService.changePublicationStatus(id, "rejected"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add_reviewer", method = RequestMethod.POST)
     public ResponseEntity<String> addReviewer(@RequestBody ReviewRequestDTO reviewRequestDTO) throws Exception {
+        notificationService.notificationReviewerAssigned(reviewRequestDTO);
         return new ResponseEntity<String>(workflowService.addReviewer(reviewRequestDTO), HttpStatus.OK);
     }
 

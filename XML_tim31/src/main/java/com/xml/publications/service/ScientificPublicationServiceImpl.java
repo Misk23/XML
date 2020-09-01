@@ -40,7 +40,6 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
         FileOutputStream fileOutputStream = new FileOutputStream(xmlFileContents);
         fileOutputStream.write(xmlFile.getBytes());
         fileOutputStream.close();
-
         return scientificPublicationRepository.savePublicationFromFile(xmlFileContents);
     }
 
@@ -63,6 +62,7 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
         Workflow workflow = workflowRepository.findByPublicationId(publicationId);
         workflow.setStatus(status);
         workflowRepository.save(workflow);
+
         return scientificPublicationRepository.changeStatus(publicationId, status);
     }
 

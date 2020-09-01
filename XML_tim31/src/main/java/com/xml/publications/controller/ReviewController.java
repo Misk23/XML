@@ -1,6 +1,7 @@
 package com.xml.publications.controller;
 
 import com.xml.publications.DTO.ReviewDTO;
+import com.xml.publications.service.NotificationService;
 import com.xml.publications.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity<String> saveReview(@RequestBody ReviewDTO reviewDTO){

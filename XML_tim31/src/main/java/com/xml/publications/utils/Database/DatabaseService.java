@@ -2,6 +2,7 @@ package com.xml.publications.utils.Database;
 
 import com.xml.publications.DTO.*;
 import com.xml.publications.model.CoverLetter.CoverLetter;
+import com.xml.publications.model.Notification.Notification;
 import com.xml.publications.model.Review.Review;
 import com.xml.publications.model.ScientificPublication.ObjectFactory;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
@@ -48,6 +49,10 @@ public class DatabaseService {
     public static final String REVIEW_COLLECTION_PATH = "/db/publications/review";
     public static final String REVIEW_SCHEMA_PATH="data/XSD/Review.xsd";
 
+    public static final String NOTIFICATION_MODEL_PATH = "com.xml.publications.model.Notification";
+    public static final String NOTIFICATION_COLLECTION_PATH = "/db/publications/notfication";
+    public static final String NOTIFICATION_SCHEMA_PATH="data/XSD/Notification.xsd";
+
     public User getUserById(String userId) throws Exception{
 
         Connection connection = new Connection();
@@ -88,7 +93,6 @@ public class DatabaseService {
             return null;
         }
     }
-
 
     public void saveUser(User user) throws Exception {
 
@@ -132,7 +136,6 @@ public class DatabaseService {
 
     }
 
-
     public void saveReview(Review review) throws Exception{
         Connection connection = new Connection();
         Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
@@ -174,7 +177,6 @@ public class DatabaseService {
 
     }
 
-
     public void savePublication(ScientificPublication scientificPublication) throws Exception {
 
         Connection connection = new Connection();
@@ -211,6 +213,47 @@ public class DatabaseService {
                     xe.printStackTrace();
                 }
             }
+        }
+
+    }
+
+    public void saveNotification(Notification notification) throws Exception{
+        Connection connection = new Connection();
+        Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+        DatabaseManager.registerDatabase(database);
+
+        XMLResource xmlResource = null;
+        Collection collection = null;
+
+        OutputStream outputStream = new ByteArrayOutputStream();
+
+        try{
+            collection = connection.getOrCreateCollection(NOTIFICATION_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            xmlResource = (XMLResource) collection.createResource(notification.getPublicationTitle(), XMLResource.RESOURCE_TYPE);
+
+            Marshaller marshaller = getMarshaller(NOTIFICATION_MODEL_PATH, NOTIFICATION_SCHEMA_PATH);
+            marshaller.marshal(notification, outputStream);
+
+            xmlResource.setContent(outputStream);
+            collection.storeResource(xmlResource);
+
+        }finally {
+            if (collection != null){
+                try{
+                    collection.close();
+                }catch (XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+            if (xmlResource != null){
+                try{
+                    ((EXistResource) xmlResource).freeResources();
+                }catch ( XMLDBException xe){
+                    xe.printStackTrace();
+                }
+            }
+
         }
 
     }
@@ -314,9 +357,6 @@ public class DatabaseService {
 
         return new MessageDTO("Publication was changed successfully :)", true);
     }
-
-
-
 
     public void saveWorkflow(Workflow workflow) throws Exception {
         Connection connection = new Connection();
@@ -540,6 +580,50 @@ public class DatabaseService {
             xpathService.setProperty("indent", "yes");
             xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/User");
             ResourceSet result = xpathService.query("//user[role=\"EDITOR_ROLE\" or role=\"REVIEWER_ROLE\"]");
+
+            ResourceIterator it = result.getIterator();
+            Resource res = null;
+
+            while (it.hasMoreResources()) {
+                try {
+                    res = it.nextResource();
+                    Unmarshaller unmarshaller = getUnmarshaller(USER_MODEL_PATH);
+                    StringReader reader = new StringReader(res.getContent().toString());
+                    User user = (User) unmarshaller.unmarshal(reader);
+                    reviewers.add(user);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return reviewers;
+
+    }
+
+    public List<User> getAllEditors(){
+        ArrayList<User> reviewers = new ArrayList<User>();
+        try {
+            Connection connection = new Connection();
+            Database database = connection.connectToDatabase(AuthenticationUtilities.loadProperties());
+            DatabaseManager.registerDatabase(database);
+
+            Collection col = connection.getOrCreateCollection(USER_COLLECTION_PATH, 0, AuthenticationUtilities.loadProperties());
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            xpathService.setNamespace("", "http://www.ftn.uns.ac.rs/XML/User");
+            ResourceSet result = xpathService.query("//user[role=\"EDITOR_ROLE\"]");
 
             ResourceIterator it = result.getIterator();
             Resource res = null;

@@ -6,6 +6,7 @@ import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.Workflow.ObjectFactory;
 import com.xml.publications.model.Workflow.Workflow;
+import com.xml.publications.service.NotificationService;
 import com.xml.publications.utils.Database.DatabaseService;
 import com.xml.publications.utils.Database.Validator;
 import com.xml.publications.utils.Transformer.PDFTransformer;
@@ -21,6 +22,9 @@ public class ScientificPublicationRepository {
 
     @Autowired
     private DatabaseService databaseService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Autowired
     private Validator validator;
@@ -55,6 +59,9 @@ public class ScientificPublicationRepository {
 
         try{
             savePublication(scientificPublication);
+            //TODO NOTIFIKCIJA
+            notificationService.notificationPublicationSubmitted(scientificPublication);
+
         }catch (Exception e){
             e.printStackTrace();
             return "Saving publication unsuccessful";
