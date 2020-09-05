@@ -1,6 +1,7 @@
 package com.xml.publications.service;
 
 import com.xml.publications.DTO.MessageDTO;
+import com.xml.publications.DTO.PublicationSearchDTO;
 import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.Workflow.Workflow;
@@ -73,6 +74,10 @@ public class ScientificPublicationServiceImpl implements ScientificPublicationSe
 
     public MessageDTO editPublication(ScientificPublicationEditDTO sp) throws Exception{
         return scientificPublicationRepository.editPublication(sp);
+    }
+
+    public List<ScientificPublication> advancedSearch(PublicationSearchDTO ps) throws Exception {
+        return scientificPublicationRepository.advancedSearch(ps);
     }
 
 }

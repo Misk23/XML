@@ -1,0 +1,20 @@
+
+
+
+SELECT * FROM <%s>
+WHERE {
+    ?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/title> ?title .
+    ?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/authorUsername> ?authorUsername .
+	?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/keywords> ?keywords .
+	?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/text> ?text .
+    ?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/chapterTitle> ?chapterTitle .
+    ?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/authorOfCitation> ?authorOfCitation .
+    ?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/publicationTitle> ?publicationTitle .
+    FILTER regex(str(?title), "")
+    FILTER regex(str(?authorUsername), "")
+    FILTER regex(str(?keywords), "")
+    FILTER regex(str(?text), "")
+    FILTER regex(str(?chapterTitle), "")
+    FILTER regex(str(?authorOfCitation), "")
+    FILTER regex(str(?publicationTitle), "")
+}

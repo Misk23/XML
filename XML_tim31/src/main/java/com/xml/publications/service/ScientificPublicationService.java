@@ -1,6 +1,7 @@
 package com.xml.publications.service;
 
 import com.xml.publications.DTO.MessageDTO;
+import com.xml.publications.DTO.PublicationSearchDTO;
 import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,5 +19,7 @@ public interface ScientificPublicationService {
     String showPublication(String publicationId);
     List<ScientificPublication> getAllAcceptedPublications();
     MessageDTO editPublication(ScientificPublicationEditDTO sp) throws Exception;
+    List<ScientificPublication> advancedSearch(PublicationSearchDTO ps) throws Exception;
+
 
 }

@@ -1,0 +1,83 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:title xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Agilne metodologije u softverskom inzenjerstvu</pred:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:authorUsername xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">marko70</pred:authorUsername>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:keywords xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">java 1</pred:keywords>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:keywords xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">programiranje 1</pred:keywords>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:keywords xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">agilnost 1</pred:keywords>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:chapterTitle xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Uvod u agilne metodologije 1</pred:chapterTitle>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tekst 1 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</pred:text>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tekst 2 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</pred:text>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:chapterTitle xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Napredni koncepti agilnog razvoja softvera</pred:chapterTitle>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tekst o naprednim tehnikama razvoja softvera</pred:text>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tekst koji je citiranc0</pred:text>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:authorOfCitation xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Marko</pred:authorOfCitation>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:authorOfCitation xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Markovic</pred:authorOfCitation>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:publicationTitle xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">naslov rada gdje citiran tekst</pred:publicationTitle>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:authorOfCitation xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">markomarkovic</pred:authorOfCitation>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1">
+    <pred:publicationTitle xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">safasfsafsafa</pred:publicationTitle>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:title xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dizajn paterni u javi</pred:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:authorUsername xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">branko2</pred:authorUsername>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:keywords xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">java</pred:keywords>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:keywords xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dizajn sabloni</pred:keywords>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:keywords xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">arhitektura sistema</pred:keywords>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:chapterTitle xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Osnovni sabloni dizajna</pred:chapterTitle>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">paragraf 1 o osnovnim sablonima dizajna</pred:text>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">paragraf 2 o osnovnim sablonima dizajna</pred:text>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:chapterTitle xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Napredni sabloni dizajna</pred:chapterTitle>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tekst o naprednim tehnikama razvoja softvera</pred:text>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2">
+    <pred:text xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tekst 2 o naprednim tehnikama razvoja softvera</pred:text>
+  </rdf:Description>
+</rdf:RDF>

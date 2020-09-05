@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<publications xmlns:sp="http://www.ftn.uns.ac.rs/XML/ScientificPublication" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" xmlns:xs="http://www.w3.org/2001/XMLSchema#">
+
+    <sp:scientificPublication about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp1" xmlns="http://www.ftn.uns.ac.rs/XML/ScientificPublication" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" publicationId="sp1" submissionDate="2018-05-04" language="srpski" status="accepted">
+        <sp:metadata>
+            <sp:title property="pred:title" datatype="xs:string">Agilne metodologije u softverskom inzenjerstvu</sp:title>
+            <sp:authors>
+                <sp:authorUsername property="pred:authorUsername" datatype="xs:string">marko70</sp:authorUsername>
+            </sp:authors>
+            <sp:keywords property="pred:keywords" datatype="xs:string">java 1</sp:keywords>
+            <sp:keywords property="pred:keywords" datatype="xs:string">programiranje 1</sp:keywords>
+            <sp:keywords property="pred:keywords" datatype="xs:string">agilnost 1</sp:keywords>
+        </sp:metadata>
+        <sp:chapter>
+            <sp:title property="pred:chapterTitle" datatype="xs:string">Uvod u agilne metodologije 1</sp:title>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">tekst 1 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
+            </sp:paragraph>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">tekst 2 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
+            </sp:paragraph>
+        </sp:chapter>
+        <sp:chapter>
+            <sp:title property="pred:chapterTitle" datatype="xs:string">Napredni koncepti agilnog razvoja softvera</sp:title>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">tekst o naprednim tehnikama razvoja softvera</sp:text>
+            </sp:paragraph>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">tekst koji je citiranc0</sp:text>
+                <sp:citation id="0"/>
+            </sp:paragraph>
+        </sp:chapter>
+        <sp:reference citationId="0">
+            <sp:authorNames property="pred:authorOfCitation" datatype="xs:string">Marko</sp:authorNames>
+            <sp:authorNames property="pred:authorOfCitation" datatype="xs:string">Markovic</sp:authorNames>
+            <sp:publicationTitle property="pred:publicationTitle" datatype="xs:string">naslov rada gdje citiran tekst</sp:publicationTitle>
+            <sp:year>2019</sp:year>
+            <sp:url>link do rada</sp:url>
+        </sp:reference>
+        <sp:reference citationId="1">
+            <sp:authorNames property="pred:authorOfCitation" datatype="xs:string">markomarkovic</sp:authorNames>
+            <sp:publicationTitle property="pred:publicationTitle" datatype="xs:string">safasfsafsafa</sp:publicationTitle>
+            <sp:year>2017</sp:year>
+            <sp:url>sdgfaf</sp:url>
+        </sp:reference>
+    </sp:scientificPublication>
+
+
+    <sp:scientificPublication about="http://www.ftn.uns.ac.rs/XML/ScientificPublication/publication/sp2" xmlns="http://www.ftn.uns.ac.rs/XML/ScientificPublication" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" publicationId="sp2" submissionDate="2018-05-04" language="srpski" status="accepted">
+        <sp:metadata>
+            <title property="pred:title" datatype="xs:string">Dizajn paterni u javi</title>
+            <authors>
+                <authorUsername property="pred:authorUsername" datatype="xs:string">branko2</authorUsername>
+            </authors>
+
+            <keywords property="pred:keywords" datatype="xs:string">java</keywords>
+            <keywords property="pred:keywords" datatype="xs:string">dizajn sabloni</keywords>
+            <keywords property="pred:keywords" datatype="xs:string">arhitektura sistema</keywords>
+        </sp:metadata>
+        <sp:chapter>
+            <sp:title property="pred:chapterTitle" datatype="xs:string">Osnovni sabloni dizajna</sp:title>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">paragraf 1 o osnovnim sablonima dizajna</sp:text>
+            </sp:paragraph>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">paragraf 2 o osnovnim sablonima dizajna</sp:text>
+            </sp:paragraph>
+        </sp:chapter>
+        <sp:chapter>
+            <sp:title property="pred:chapterTitle" datatype="xs:string">Napredni sabloni dizajna</sp:title>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">tekst o naprednim tehnikama razvoja softvera</sp:text>
+            </sp:paragraph>
+            <sp:paragraph>
+                <sp:text property="pred:text" datatype="xs:string">tekst 2 o naprednim tehnikama razvoja softvera</sp:text>
+            </sp:paragraph>
+        </sp:chapter>
+    </sp:scientificPublication>
+
+</publications>

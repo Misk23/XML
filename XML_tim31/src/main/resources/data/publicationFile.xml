@@ -1,73 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="ScientificPublication.xsl"?>
-<sp:scientificPublication xmlns:sp="http://www.ftn.uns.ac.rs/XML/ScientificPublication" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ftn.uns.ac.rs/XML/ScientificPublication file:/C:/Users/USER/Desktop/xml_projekat/XML/XML_tim31/src/main/resources/data/XSD/ScientificPublication.xsd" publicationId="publicationId1" submissionDate="2018-05-04" language="srpski" status="accepted">
+<sp:scientificPublication xmlns:sp="http://www.ftn.uns.ac.rs/XML/ScientificPublication" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:pred="http://www.ftn.uns.ac.rs/rdf/publication/predicate/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ftn.uns.ac.rs/XML/ScientificPublication file:/C:/Users/USER/Desktop/xml_projekat/XML/XML_tim31/src/main/resources/data/XSD/ScientificPublication.xsd" publicationId="publicationId1" submissionDate="2018-05-04" language="srpski" status="accepted">
     <sp:metadata>
-
-        <sp:title>Agilne metodologije u softverskom inzenjerstvu </sp:title>
+        <sp:title property="pred:title" datatype="xs:string">Agilne metodologije u softverskom inzenjerstvu</sp:title>
         <sp:authors>
-            <sp:authorUsername>nikola123</sp:authorUsername>
-
+            <sp:authorUsername property="pred:authorUsername" datatype="xs:string">marko70</sp:authorUsername>
         </sp:authors>
-
-        <sp:authors>
-            <sp:authorUsername>branko</sp:authorUsername>
-        </sp:authors>
-
-        <sp:reviewers>
-            <sp:reviewerUsername>petar123</sp:reviewerUsername>
-
-        </sp:reviewers>
-
-        <sp:keywords>programiranje</sp:keywords>
-        <sp:keywords>softveversko inzenjerstvo</sp:keywords>
-        <sp:keywords>agilni razvoj</sp:keywords>
+        <sp:keywords property="pred:keywords" datatype="xs:string">java 1</sp:keywords>
+        <sp:keywords property="pred:keywords" datatype="xs:string">programiranje 1</sp:keywords>
+        <sp:keywords property="pred:keywords" datatype="xs:string">agilnost 1</sp:keywords>
     </sp:metadata>
     <sp:chapter>
-        <sp:title>Uvod u agilne metodologije</sp:title>
+        <sp:title property="pred:chapterTitle" datatype="xs:string">Uvod u agilne metodologije 1</sp:title>
         <sp:paragraph>
-            <sp:text>tekst 1 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
-            <!--            <citation id="0">
-                            <authorNames>authorNames0</authorNames>
-                            <authorNames>authorNames1</authorNames>
-                            <year>50</year>
-                            <text>text1</text>
-                        </citation>-->
+            <sp:text property="pred:text" datatype="xs:string">tekst 1 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
         </sp:paragraph>
         <sp:paragraph>
-            <sp:text>tekst 2 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
-            <!--            <citation id="0">
-                            <authorNames>authorNames2</authorNames>
-                            <authorNames>authorNames3</authorNames>
-                            <year>50</year>
-                            <text>text3</text>
-                        </citation>-->
+            <sp:text property="pred:text" datatype="xs:string">tekst 2 o uvodu u agilne metodologije primenjene u softverskom inzenjerstvu</sp:text>
         </sp:paragraph>
     </sp:chapter>
     <sp:chapter>
-        <sp:title>Napredni koncepti agilnog razvoja softvera</sp:title>
+        <sp:title property="pred:chapterTitle" datatype="xs:string">Napredni koncepti agilnog razvoja softvera</sp:title>
         <sp:paragraph>
-            <sp:text>tekst o naprednim tehnikama razvoja softvera</sp:text>
-            <!--            <citation id="0">
-                            <authorNames>authorNames4</authorNames>
-                            <authorNames>authorNames5</authorNames>
-                            <year>50</year>
-                            <text>text5</text>
-                        </citation>-->
+            <sp:text property="pred:text" datatype="xs:string">tekst o naprednim tehnikama razvoja softvera</sp:text>
         </sp:paragraph>
         <sp:paragraph>
-            <!--            <text>text6</text>-->
-            <sp:citation id="0">
-                <sp:authorNames>Marko Markovic</sp:authorNames>
-                <sp:year>2019</sp:year>
-                <sp:text>tekst koji je citiran</sp:text>
-            </sp:citation>
-
+            <sp:text property="pred:text" datatype="xs:string">tekst koji je citiranc0</sp:text>
+            <sp:citation id="0"/>
         </sp:paragraph>
     </sp:chapter>
     <sp:reference citationId="0">
-        <sp:authorNames>Marko Markovic</sp:authorNames>
-        <sp:publicationTitle>naslov rada gdje citiran tekst</sp:publicationTitle>
+        <sp:authorNames property="pred:authorOfCitation" datatype="xs:string">Marko</sp:authorNames>
+        <sp:authorNames property="pred:authorOfCitation" datatype="xs:string">Markovic</sp:authorNames>
+        <sp:publicationTitle property="pred:publicationTitle" datatype="xs:string">naslov rada gdje citiran tekst</sp:publicationTitle>
         <sp:year>2019</sp:year>
         <sp:url>link do rada</sp:url>
+    </sp:reference>
+    <sp:reference citationId="1">
+        <sp:authorNames property="pred:authorOfCitation" datatype="xs:string">markomarkovic</sp:authorNames>
+        <sp:publicationTitle property="pred:publicationTitle" datatype="xs:string">safasfsafsafa</sp:publicationTitle>
+        <sp:year>2017</sp:year>
+        <sp:url>sdgfaf</sp:url>
     </sp:reference>
 </sp:scientificPublication>

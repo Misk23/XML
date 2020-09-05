@@ -3,6 +3,7 @@ package com.xml.publications.controller;
 
 import com.xml.publications.DTO.MessageDTO;
 import com.xml.publications.DTO.MessageEditPublicationDTO;
+import com.xml.publications.DTO.PublicationSearchDTO;
 import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.service.NotificationService;
@@ -145,6 +146,14 @@ public class ScientificPublicationController {
         MessageDTO messageDTO = scientificPublicationService.editPublication(sp);
 
         return new ResponseEntity<MessageDTO>(messageDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/advancedSearch", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ScientificPublication>> advancedSearch(@RequestBody PublicationSearchDTO ps) throws Exception {
+        System.out.println(ps);
+        List<ScientificPublication> scientificPublications = scientificPublicationService.advancedSearch(ps);
+
+        return new ResponseEntity<List<ScientificPublication>>(scientificPublications, HttpStatus.OK);
     }
 
 

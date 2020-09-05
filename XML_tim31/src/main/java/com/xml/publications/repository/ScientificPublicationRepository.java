@@ -2,19 +2,25 @@ package com.xml.publications.repository;
 
 
 import com.xml.publications.DTO.MessageDTO;
+import com.xml.publications.DTO.PublicationSearchDTO;
 import com.xml.publications.DTO.ScientificPublicationEditDTO;
 import com.xml.publications.model.ScientificPublication.ScientificPublication;
 import com.xml.publications.model.Workflow.ObjectFactory;
 import com.xml.publications.model.Workflow.Workflow;
 import com.xml.publications.service.NotificationService;
+import com.xml.publications.utils.Authentication.AuthenticationUtilities;
 import com.xml.publications.utils.Database.DatabaseService;
 import com.xml.publications.utils.Database.Validator;
+import com.xml.publications.utils.RDF.MetadataExtractor;
 import com.xml.publications.utils.Transformer.PDFTransformer;
+import org.apache.xmlrpc.webserver.ServletWebServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.xml.transform.dom.DOMSource;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Component
@@ -146,6 +152,66 @@ public class ScientificPublicationRepository {
         return databaseService.editPublication(sp);
     }
 
+    public List<ScientificPublication> advancedSearch(PublicationSearchDTO ps) throws Exception {
+        List<ScientificPublication> scientificPublications = new ArrayList<>();
+        HashSet<String> ids = new HashSet<String>();
+        StringBuilder filter = new StringBuilder();
+
+        MetadataExtractor metadataExtractor = new MetadataExtractor();
+        String query = "SELECT * FROM <http://localhost:3030/Publication/data/example/sparql/metadata> WHERE { ";
+
+        if (!ps.getTitle().trim().equalsIgnoreCase("")){
+            query += "?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/title> ?title .\n";
+            filter.append("FILTER regex(str(?title), \"" + ps.getTitle().trim() + "\") \n");
+        }
+
+        if (!ps.getAuthor().trim().equalsIgnoreCase("")){
+            query += "?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/authorUsername> ?authorUsername .\n";
+            filter.append("FILTER regex(str(?authorUsername), \"" + ps.getAuthor().trim() + "\") \n");
+        }
+
+        if (!ps.getKeyword().trim().equalsIgnoreCase("")){
+            query += "?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/keywords> ?keywords .\n";
+            filter.append("FILTER regex(str(?keywords), \"" + ps.getKeyword().trim() + "\") \n");
+        }
+
+        if (!ps.getText().trim().equalsIgnoreCase("")){
+            query += "?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/text> ?text .\n";
+            filter.append("FILTER regex(str(?text), \"" + ps.getText().trim() + "\") \n");
+        }
+
+        if (!ps.getChapterTitle().trim().equalsIgnoreCase("")){
+            query += "?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/chapterTitle> ?chapterTitle .\n";
+            filter.append("FILTER regex(str(?chapterTitle), \"" + ps.getChapterTitle().trim() + "\") \n");
+        }
+
+        if (!ps.getAuthorCitation().trim().equalsIgnoreCase("")){
+            query += "?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/authorOfCitation> ?authorOfCitation .\n";
+            filter.append("FILTER regex(str(?authorOfCitation), \"" + ps.getAuthorCitation().trim() + "\") \n");
+        }
+
+        if (!ps.getPublicationTitle().trim().equalsIgnoreCase("")){
+            query += "?publication <http://www.ftn.uns.ac.rs/rdf/publication/predicate/publicationTitle> ?publicationTitle .\n";
+            filter.append("FILTER regex(str(?publicationTitle), \"" + ps.getPublicationTitle().trim() + "\") \n");
+        }
+
+        boolean loadQueryFromFile = true;
+        if (filter.toString().contains("regex")) {
+            query += filter.toString();
+            loadQueryFromFile = false;
+        }
+
+        query += "}";
+
+        metadataExtractor.sentQuery(AuthenticationUtilities.loadPropertiesJenaFuseki(), ids, query, loadQueryFromFile);
+
+        for(String id: ids){
+            ScientificPublication scientificPublication = databaseService.getPublicationById(id);
+            scientificPublications.add(scientificPublication);
+        }
+
+        return scientificPublications;
+    }
 
 
 }
