@@ -61,22 +61,6 @@
                     </xsl:for-each>
                 </p>
 
-
-
-                <br />
-
-                <b style="font-size: 20px;">Reviewers: </b>
-                <p style="text-align: left; font-weight: normal;">
-                    <xsl:for-each
-                            select="sp:scientificPublication/sp:metadata/sp:reviewers">
-                        <p style="float:left; margin-left:30px">
-                            <xsl:value-of select="sp:reviewerUsername" />
-                            <br/>
-                        </p>
-                        <br/>
-                    </xsl:for-each>
-                </p>
-
                 <br/>
 
                 <b>Keywords:</b>
